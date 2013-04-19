@@ -1,0 +1,56 @@
+########################################
+#                                      #
+# PNC deforming LAMMPS input script    #
+#                                      #
+########################################
+
+# 4 npt relaxation.
+
+# VARIABLES
+variable fname index annealing
+variable simname index npt2zero 
+variable temperature index 600
+variable damping index 50
+variable runtimes index 40000000
+#variable infile index in.file
+#variable prefactor equal ramp(0,30)
+
+# Initialization
+units		real
+boundary	p p p 
+atom_style	molecular
+log 		${simname}.log
+#read_data	${fname}.dat
+read_restart	restart.${fname}.dat
+
+# Dreiding potential information
+neighbor	0.4 bin
+neigh_modify	every 10 one 10000
+bond_style      class2
+bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
+#bond_coeff	1 4.7 0.25ev 0.0 0.125ev
+
+#special_bonds fene angle no dihedral no
+special_bonds lj 0.0 1.0 1.0
+
+#####equi1_pair.py data
+include pairfile_no_soft
+####equi1_pair.py complete
+
+#####################################################
+# Equilibration Stage 4 (NPT dynamics at 600 K)
+fix   1st all npt temp ${temperature} ${temperature} ${damping} iso 0 0 100 drag 1 
+                                                                          # drag added to damp osillation by thermostat
+fix   2nd all momentum 1 linear 1 1 1 angular
+thermo_style    custom step temp press epair ebond pe ke etotal lx pxx pxy vol
+thermo          1000
+timestep	2
+dump 1 all dcd  10000 ${simname}.dcd
+run		${runtimes}
+unfix 1st
+unfix 2nd
+
+write_restart 	restart.${simname}.dat
+
+print " All done!"
+

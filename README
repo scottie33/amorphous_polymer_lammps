@@ -1,0 +1,43 @@
+
+pre-run: 
+1, lmp2pdb.py data.data (generate .psf and .pdb for post-processing)
+2, after .dcd loaded by vmd: source doit.tcl
+
+run:
+1, runlist.bash
+
+post-run:
+you can use the following cli to see your data-fig:
+1, readlog.py
+2, create_html.bash
+   dependencies:
+   a, draw_data.gpl 
+      please note, tempdata.gpl needed, 
+      so actually these 2 are important and portable for any drawing)  
+   b, showdata.bash
+*, topology of the usage:
+               / create_html.bash
+   readlog.py {
+               \ getstress.py
+just hit them in your command line to see 'how to'
+e.g.:
+ ./readlog.py example.log
+ ./create_html.bash example.gnuplot.dat (this file is created by the last command)
+or 
+ ./readlog.py example.log Step example.inputfornextcmd 
+ ./create_html.bash example.inputfornextcmd
+
+3, rdf.bash
+
+Attention:
+
+1, for the [keyword], we shall set it the 1st keyword of dump keywords in your .log file, normally "Step"
+2, nothing more so far...
+
+
+O(ne) C(lick) S(eries): Lammps .log file.
+Dependencies: bash, python, gnuplot;
+Comman Line Format : cmd log-filename.
+description: you will have a .html (or all figures in .eps) of the information you are able to get from .log from a Lammps production run.
+
+if any problem, improvement made, or any Q, please contact me: leiw@ustc.edu.cn

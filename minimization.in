@@ -1,0 +1,66 @@
+########################################
+#                                      #
+# PNC deforming LAMMPS input script    #
+#                                      #
+########################################
+
+# 0 minimization nve/limit langevin
+
+# VARIABLES
+variable fname index PE_nc64_cl64_NP99L
+variable simname index minimization
+variable temperature index 600
+variable damping index 10
+variable runtimes index 500000
+#variable infile index in.file
+#variable prefactor equal ramp(0,30)
+
+# Initialization
+units		real
+boundary	p p p 
+atom_style	molecular
+log 		${simname}.log
+read_data	${fname}.dat
+#read_data	restart.${fname}.dat
+
+# Dreiding potential information
+neighbor	0.4 bin
+neigh_modify	every 10 one 10000
+bond_style      class2
+bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
+#bond_coeff	1 4.7 0.25ev 0.0 0.125ev
+
+#special_bonds fene angle no dihedral no
+special_bonds lj 0.0 1.0 1.0
+
+#####equi1_pair.py data
+include pairfile_no_soft
+####equi1_pair.py complete
+#pair_write 64 1 500 r 4.5 7 ljtable.txt lj/cut
+#####################################################
+# Equilibration Stage 0 (Langevin dynamics at 600 K)
+velocity 	all create ${temperature} 1231
+fix		1st all nve/limit 0.05
+fix		2nd all langevin ${temperature} ${temperature} ${damping} 904297
+
+thermo_style	custom step temp press pe ke etotal epair ebond emol vol # NVT?
+thermo          100
+timestep	2	
+dump		1 all dcd  1000 ${simname}.dcd
+run		${runtimes}
+unfix 1st
+unfix 2nd
+write_restart 	restart.${simname}.dat
+
+print " All done!"
+
+
+
+
+
+
+
+
+
+
+

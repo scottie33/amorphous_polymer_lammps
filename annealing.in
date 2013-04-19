@@ -1,0 +1,80 @@
+########################################
+#                                      #
+# PNC deforming LAMMPS input script    #
+#                                      #
+########################################
+
+# 3 nvt annealing.
+
+# VARIABLES
+variable fname index deformation
+variable simname index annealing
+variable temperature index 1000
+variable damping index 20
+variable runtimes index 250000 #each run.
+variable teminterval index 50
+variable looptime loop 8 #0-8 1000 -> 600 (by 50 each time)
+
+# Initialization
+units		real
+boundary	p p p 
+atom_style	molecular
+log 		${simname}.log
+#read_data	${fname}.dat
+read_restart	restart.${fname}.dat
+
+# Dreiding potential information
+neighbor	0.4 bin
+neigh_modify	every 10 one 10000
+bond_style      class2
+bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
+#bond_coeff	1 4.7 0.25ev 0.0 0.125ev
+
+#special_bonds fene angle no dihedral no
+special_bonds lj 0.0 1.0 1.0
+
+#####equi1_pair.py data
+include pairfile_no_soft 
+####equi1_pair.py complete
+
+#####################################################
+# Equilibration Stage 3 (NPT dynamics at 600 K)
+fix   		4th all momentum 1 linear 1 1 1 angular
+thermo_style	custom step temp pe ke etotal press epair ebond vol pxx pyy pzz lx ly lz
+thermo      1000
+timestep	2
+dump 1 all dcd 10000 ${simname}.dcd
+
+variable rtdecreasing equal ${runtimes}*2
+
+fix   1st all nvt temp ${temperature} ${temperature} ${damping}
+run		${runtimes}
+unfix 1st
+
+label loopA
+variable currentT equal ${temperature}-${looptime}*${teminterval}
+variable currentH equal ${currentT}+${teminterval}
+variable currentD equal 20-(${temperature}-${currentT})/40.0
+print " now the ${looptime}th annealing, and T[hi]=${currentH} T[lo]=${currentT} D=${currentD}"
+fix   1st all nvt temp ${currentH} ${currentH} ${currentD} #
+run		${runtimes}
+unfix 1st
+fix   1st all nvt temp ${currentH} ${currentT} ${currentD}
+run		${rtdecreasing}
+unfix 1st
+fix   1st all nvt temp ${currentT} ${currentT} ${currentD}
+run		${runtimes}
+unfix 1st
+next looptime
+jump ${simname}.in loopA
+#jump SELF loopA
+
+fix   1st all nvt temp ${currentT} ${currentT} ${currentD}
+run		${runtimes}
+unfix 1st
+
+unfix 4th
+write_restart 	restart.${simname}.dat
+
+print " All done!"
+

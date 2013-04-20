@@ -10,8 +10,8 @@
 variable fname index npt2zero
 variable simname index stretching
 #variable temperature index 600
-#variable damping index 10
-variable runtimes index 430000
+#variable damping index 20
+variable runtimes index 1075000
 #variable teminterval index 50
 #variable looptime loop 8 #0-8 1000 -> 600 (by 50 each time)
 
@@ -34,7 +34,7 @@ bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
 special_bonds lj 0.0 1.0 1.0
 
 #####equi1_pair.py data
-include pairfile_no_soft 
+include pairfile_no_soft
 ####equi1_pair.py complete
 
 #####################################################
@@ -50,7 +50,7 @@ fix def1 all print 100 "${p1} ${p2}" file ${simname}.dat screen no
 thermo_style    custom step temp epair ebond ke press vol lx ly lz pxx pyy pzz pxy pxz pyz
 thermo          100
 dump            1 all dcd 100 ${simname}.dcd
-timestep        5
+timestep        2
 reset_timestep  0
 run		${runtimes}
 

@@ -10,7 +10,7 @@
 variable fname index npt2zero
 variable simname index be4nvtlow
 variable temperature index 600
-variable damping index 10
+variable damping index 20
 variable runtimes index 500000
 #variable prefactor equal ramp(0,30)
 include volume.in

@@ -24,7 +24,7 @@ while True:
 		templist.append(float(elements[0]))
 		templist.append(float(elements[1]))
 		alllines.append(templist)
-		print alllines[-1]
+		#print alllines[-1]
 
 inpfp1.close() # out
 #alllines=sorted(alllines, cmp=lambda x,y : cmp(x[0], y[0]))

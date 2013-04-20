@@ -78,6 +78,7 @@ while True:
 	else:
 		print " end of file, loading over. 1"
 		break
+	print line
 	if len(elements) == 0:
 		continue # pass this line.
 	if len(elements)<lastlen:
@@ -101,19 +102,31 @@ lsize=len(Ener)
 print " there are",lsize,"data loaded"
 entenafp=open("stress-elongation.dat", 'w')
 for i in range(0,lsize):
-	print >> entenafp, "%f %f" % ((LenZ[i]-LenZ[0])/LenZ[0], -Ener[i]*101.325)
+	print >> entenafp, "%f %f %f" % ((LenZ[i]-LenZ[0])/LenZ[0], -Ener[i]*0.101325, -Ener[i]*1.01325/1.60217733/1000000 ) 
+	                                                           # mpa, ev/a^-3
 entenafp.close()
 print " file: [ stress-elongation.dat ] written. "
 tempgplfp=open("tempdata.gpl",'w')
 print >> tempgplfp, "inp='stress-elongation.dat'"
-print >> tempgplfp, "out='Stress-Elongation'"
+print >> tempgplfp, "out='Stress-Elongation-MPa'"
 print >> tempgplfp, "colx=1"
 print >> tempgplfp, "coly=2"
 print >> tempgplfp, "xlabeltext='Elongation (%)'"
-print >> tempgplfp, "ylabeltext='Stress'"
+print >> tempgplfp, "ylabeltext='Stress (MPa)'"
 tempgplfp.close()
 os.system("gnuplot draw_data.gpl")
-print " now you can check file: [ Stress-Elongation.eps ]."
+print " now you can check file: [ Stress-Elongation-MPa.eps ]."
+
+tempgplfp2=open("tempdata.gpl",'w')
+print >> tempgplfp2, "inp='stress-elongation.dat'"
+print >> tempgplfp2, "out='Stress-Elongation-eV'"
+print >> tempgplfp2, "colx=1"
+print >> tempgplfp2, "coly=3"
+print >> tempgplfp2, "xlabeltext='Elongation (%)'"
+print >> tempgplfp2, "ylabeltext='Stress (eV/A^3)'"
+tempgplfp2.close()
+os.system("gnuplot draw_data.gpl")
+print " now you can check file: [ Stress-Elongation-eV.eps ]."
 
 
 exit(0)

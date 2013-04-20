@@ -11,7 +11,7 @@ variable fname index annealing
 variable simname index npt2zero 
 variable temperature index 600
 variable damping index 50
-variable runtimes index 40000000
+variable runtimes index 5000000
 #variable infile index in.file
 #variable prefactor equal ramp(0,30)
 
@@ -39,16 +39,25 @@ include pairfile_no_soft
 
 #####################################################
 # Equilibration Stage 4 (NPT dynamics at 600 K)
-fix   1st all npt temp ${temperature} ${temperature} ${damping} iso 0 0 100 drag 1 
-                                                                          # drag added to damp osillation by thermostat
+fix   1st all npt temp ${temperature} ${temperature} ${damping} iso 0 0 ${damping} drag 1 
+                                                                         # drag added to damp osillation by thermostat
 fix   2nd all momentum 1 linear 1 1 1 angular
+variable tmplx equal "lx"
+variable tmply equal "ly"
+variable tmplz equal "lz"
+variable tmpvo equal "vol"
+variable tmpen equal "etotal"
+fix   def1 all print 100 "${tmplx} ${tmply} ${tmplz}" file ${simname}.vol.dat screen no
+fix   def2 all print 100 "${tmpvo} ${tmpen}" file ${simname}.ene.dat screen no
 thermo_style    custom step temp press epair ebond pe ke etotal lx pxx pxy vol
 thermo          1000
 timestep	2
-dump 1 all dcd  10000 ${simname}.dcd
+dump 1 all dcd  1000 ${simname}.dcd
 run		${runtimes}
 unfix 1st
 unfix 2nd
+unfix def1
+unfix def2
 
 write_restart 	restart.${simname}.dat
 

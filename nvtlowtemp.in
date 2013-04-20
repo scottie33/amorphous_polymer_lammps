@@ -4,14 +4,14 @@
 #                                      #
 ########################################
 
-# 5 nvt @600k after relaxation
+# 6 nvt @600k after relaxation
 
 # VARIABLES
-variable fname index npt2zero
+variable fname index be4nvtlow
 variable simname index nvtlowtemp
 variable temperature index 600
 variable damping index 10
-variable runtimes index 5000000
+variable runtimes index 2000000
 #variable teminterval index 50
 #variable looptime loop 8 #0-8 1000 -> 600 (by 50 each time)
 
@@ -39,7 +39,7 @@ include pairfile_no_soft
 
 #####################################################
 # Equilibration Stage 5 (NVT dynamics at 600 K after relaxation)
-fix         1st all nvt temp ${temperature} ${temperature} ${damping} # higher the visocity, lower damping 
+fix         1st all nvt temp ${temperature} ${temperature} ${damping} # higher the viscosity, lower damping 
 fix   		4th all momentum 1 linear 1 1 1 angular
 thermo_style	custom step temp press epair ebond vol pxx pyy pzz lx ly lz
 thermo          500

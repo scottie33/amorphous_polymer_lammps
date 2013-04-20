@@ -7,10 +7,14 @@ EXEC=lmp_g++
 #lammps < premin.in &> premin.log
 #echo " premin ended."
 
-for i in `echo minimization nvthightemp deformation annealing npt2zero nvtlowtemp stretching`; do 
+for i in `echo minimization nvthightemp deformation annealing npt2zero be4nvtlow nvtlowtemp stretching`; do 
 	#echo "$i.in"
 	echo " running $i now..." 
-	mpirun -np ${PNUM} ${EXEC} < $i.in  
+	#mpirun -np ${PNUM} ${EXEC} < $i.in  
+	if [ $i == "npt2zero" ]; then
+		echo " creating volume dimension ... "
+		python < avevol.py
+	fi
 	echo " $i ended."
 done
 

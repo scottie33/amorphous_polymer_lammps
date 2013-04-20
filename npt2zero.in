@@ -39,7 +39,7 @@ include pairfile_no_soft
 
 #####################################################
 # Equilibration Stage 4 (NPT dynamics at 600 K)
-fix   1st all npt temp ${temperature} ${temperature} ${damping} iso 0 0 ${damping} drag 1 
+fix   1st all npt temp ${temperature} ${temperature} ${damping} iso 0.1 0.1 ${damping} drag 1 
                                                                          # drag added to damp osillation by thermostat
 fix   2nd all momentum 1 linear 1 1 1 angular
 variable tmplx equal "lx"

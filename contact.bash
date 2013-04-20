@@ -18,16 +18,19 @@ echo  "set r1 $7 " >> tempinput.tcl
 echo  "set r2 $8 " >> tempinput.tcl
 #######################################
 
-vmd -dispdev text -e rdf.tcl
+vmd -dispdev text -e contact.tcl
 
 #### gnuplot code to be added here ####
-echo "inp='grdf.dat'" > tempdata.gpl
-echo "out='Grdf'" >> tempdata.gpl
+echo "inp='contacts.dat'" > tempdata.gpl
+echo "out='Contacts'" >> tempdata.gpl
 echo "colx=1" >> tempdata.gpl
-echo "coly=2" >> tempdata.gpl
-echo "xlabeltext='Distance'" >> tempdata.gpl
-echo "ylabeltext='Distribution'" >> tempdata.gpl
-gnuplot draw_data_rdf.gpl
-echo " check out your [ Grdf.eps ] :)"
+echo "col2=2" >> tempdata.gpl
+echo "col3=3" >> tempdata.gpl
+echo "col4=4" >> tempdata.gpl
+echo "col5=5" >> tempdata.gpl
+echo "xlabeltext='TimeStep'" >> tempdata.gpl
+echo "ylabeltext='Contacts'" >> tempdata.gpl
+gnuplot draw_data_contact.gpl
+echo " check out your [ Contacts.eps ] :)"
 #######################################
 exit 0 

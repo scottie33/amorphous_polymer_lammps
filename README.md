@@ -19,13 +19,12 @@ a, **draw_data.gpl**
 
 b, **showdata.bash**
 
-*, topology of the usage:
 
-                 / create_html.bash
+topology of the usage:
 
+                / create_html.bash
     readlog.py {
-
-                 \ getstress.py
+                \ getstress.py
  
 **rdf.bash** (.psf needed, using **lmp2pdb.py**)
 

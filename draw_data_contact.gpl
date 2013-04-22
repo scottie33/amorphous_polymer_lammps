@@ -49,10 +49,14 @@ set xtics nomirror #font "UTF-8,12" #tc rgb "#0000ff"
 #set key box
 #set arrow 1 from 0,1 to 10,1 nohead lt 4 lw 4 lc rgb "gray"
 #plot for [i=2:nrep:1] "probability_each.dat" u 1:i w filledcurves title "T".i
-plot inp u colx:col2 w l lt 1 lw 6 lc rgb "orange" title "PP",\
-     inp u colx:col3 w l lt 1 lw 6 lc rgb "red" title "PN",\
-     inp u colx:col4 w l lt 1 lw 6 lc rgb "blue" title "NP",\
-     inp u colx:col5 w l lt 1 lw 6 lc rgb "royalblue" title "NN"
+plot inp u colx:($2/($2+$3+$4+$5)) w l lt 1 lw 6 lc rgb "gray" title "",\
+	 inp u colx:($2/($2+$3+$4+$5)) smooth bezier w l lt 1 lw 4 lc rgb "orange" title "PP",\
+	 inp u colx:($3/($2+$3+$4+$5)) w l lt 1 lw 6 lc rgb "gray" title "",\
+     inp u colx:($3/($2+$3+$4+$5)) smooth bezier w l lt 1 lw 4 lc rgb "red" title "PN",\
+     inp u colx:($4/($2+$3+$4+$5)) w l lt 1 lw 6 lc rgb "gray" title "",\
+     inp u colx:($4/($2+$3+$4+$5)) smooth bezier w l lt 1 lw 4 lc rgb "blue" title "NP",\
+     inp u colx:($5/($2+$3+$4+$5)) w l lt 1 lw 6 lc rgb "gray" title "",\
+     inp u colx:($5/($2+$3+$4+$5)) smooth bezier w l lt 1 lw 4 lc rgb "royalblue" title "NN"
      #"beta.dat" u 1:2 smooth bezier w l lt 2 lw 1 lc rgb "brown" title ""
 
 #plot "beta.dat" u 1:2 title "" smooth bezier w l lt 1 lw 6 lc rgb "gray"

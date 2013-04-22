@@ -1,8 +1,10 @@
 #!/bin/bash
 
 if [ $# -lt 8 ]; then
-	echo " you should have VMD installed with path set well.\n"
-	echo " cmd psffile dcdfile fromid1 toid1 fromid2 toid2 sigma1 sigma2\n"
+	echo " you should have VMD installed with path set well."
+	echo " "
+	echo " cmd psffile dcdfile fromid1 toid1 fromid2 toid2 sigma1 sigma2"
+	echo " "
 	echo " please try again."
 	exit -1
 fi
@@ -21,16 +23,18 @@ echo  "set r2 $8 " >> tempinput.tcl
 vmd -dispdev text -e contact.tcl
 
 #### gnuplot code to be added here ####
-echo "inp='contacts.dat'" > tempdata.gpl
-echo "out='Contacts'" >> tempdata.gpl
-echo "colx=1" >> tempdata.gpl
-echo "col2=2" >> tempdata.gpl
-echo "col3=3" >> tempdata.gpl
-echo "col4=4" >> tempdata.gpl
-echo "col5=5" >> tempdata.gpl
-echo "xlabeltext='TimeStep'" >> tempdata.gpl
-echo "ylabeltext='Contacts'" >> tempdata.gpl
-gnuplot draw_data_contact.gpl
-echo " check out your [ Contacts.eps ] :)"
+num=1
+for i in `echo PP PN NP NN`; do 
+	let num=${num}+1
+	echo " using ${num}-th column data as input."
+	echo "inp='contacts.dat'" > tempdata.gpl
+	echo "out='${i}-contact'" >> tempdata.gpl
+	echo "colx=1" >> tempdata.gpl
+	echo "coly=${num}" >> tempdata.gpl
+	echo "xlabeltext='TimeStep'" >> tempdata.gpl
+	echo "ylabeltext='Contacts_$i'" >> tempdata.gpl
+	gnuplot draw_data.gpl
+	echo " check out your [ ${i}-contact.eps ] :)"
+done
 #######################################
 exit 0 

@@ -67,7 +67,7 @@ pair_coeff 62 62 lj/cut 1.129989 4.700000 5.275572
 pair_coeff 63 63 lj/cut 1.129989 4.700000 5.275572
 pair_coeff 64 64 lj/cut 1.129989 4.700000 5.275572
 
-pair_coeff * 65 lj/cut 4.519956 5.400000 11.340000
-pair_coeff 65 65 lj/cut 0.282497 6.100000 12.810000
+pair_coeff * 65 lj/cut 4.519956 6.950000 14.595000
+pair_coeff 65 65 lj/cut 0.282497 9.200000 19.320000
 pair_coeff * 65 soft 0.5
 fix SphSP all adapt 1 pair soft a * 65 v_prefactor

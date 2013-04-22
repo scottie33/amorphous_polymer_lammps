@@ -78,7 +78,7 @@ while True:
 	else:
 		print " end of file, loading over. 1"
 		break
-	print line
+	#print line
 	if len(elements) == 0:
 		continue # pass this line.
 	if len(elements)<lastlen:

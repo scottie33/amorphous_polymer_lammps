@@ -11,13 +11,17 @@ set r1 4.7
 set r2 4.7
 source "tempinput.tcl"
 set range [expr 1.1*[expr pow(2.0,1.0/6.0)]]
-set r1ranged [expr $r1*$range]
-set r2ranged [expr $r2*$range]
+set r11ranged [expr $r1*$range]
+set r12ranged [expr [expr ($r1+$r2)/2.0]*$range]
+set r22ranged [expr $r2*$range]
+set r21ranged $r12ranged
 puts " loading from $inputdcd using structure information $inputpsf."
 puts " sel1=\[$sresids:$sreside\]"
 puts " sel1=\[$eresids:$ereside\]"
-puts " sigma1=$r1, will calculate in distance (0:$r1ranged]"
-puts " sigma2=$r2, will calculate in distance (0:$r2ranged]"
+puts " sigma1=$r1, will calculate in distance (0:$r11ranged]"
+puts " sigma2=$r2, will calculate in distance (0:$r22ranged]"
+puts " 1<->2, will calculate in distance (0:$r12ranged]"
+puts " 2<->1, will calculate in distance (0:$r21ranged]"
 
 mol load psf $inputpsf dcd $inputdcd
 
@@ -75,8 +79,8 @@ for { set i 0 } { $i < $nf } { incr i } {
 	set numNP 0
 	set numNN 0
 	foreach j $indices1 { ;# P
-		set tempPP [atomselect $mol "(resid $sresids to $sreside) and within $r1ranged of index $j"]
-		set tempPN [atomselect $mol "(resid $eresids to $ereside) and within $r1ranged of index $j"]
+		set tempPP [atomselect $mol "(resid $sresids to $sreside) and within $r11ranged of index $j"]
+		set tempPN [atomselect $mol "(resid $eresids to $ereside) and within $r12ranged of index $j"]
 		set numPP [expr $numPP+[$tempPP num]]
 		set numPN [expr $numPN+[$tempPN num]]
 		$tempPP delete
@@ -84,8 +88,8 @@ for { set i 0 } { $i < $nf } { incr i } {
 	}
 	#puts $numPN
 	foreach j $indices2 { ;# N
-		set tempNP [atomselect $mol "(resid $sresids to $sreside) and within $r2ranged of index $j"]
-		set tempNN [atomselect $mol "(resid $eresids to $ereside) and within $r2ranged of index $j"]
+		set tempNP [atomselect $mol "(resid $sresids to $sreside) and within $r21ranged of index $j"]
+		set tempNN [atomselect $mol "(resid $eresids to $ereside) and within $r22ranged of index $j"]
 		set numNP [expr $numNP+[$tempNP num]]
 		set numNN [expr $numNN+[$tempNN num]]
 		$tempNP delete

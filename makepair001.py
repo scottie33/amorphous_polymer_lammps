@@ -11,11 +11,11 @@ cutdis_pp=2.1*sigma_pp
 welldis_pp=pow(2,1/6.0)*sigma_pp
 
 epsilon_nn=0.25*epsilon_pp
-sigma_nn=6.1
+sigma_nn=9.2
 cutdis_nn=2.1*sigma_nn
 
 epsilon_np=4.0*epsilon_pp
-sigma_np=5.4
+sigma_np=(sigma_nn+sigma_pp)/2.0
 cutdis_np=2.1*sigma_np
 
 print >> pairfile, "pair_style hybrid lj/cut 19.32 soft 10.0"

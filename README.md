@@ -13,24 +13,22 @@ post-run:
 
 1, **readlog.py**
 
-2, **create_html.bash**
+2, **create_html.bash** dependencies:
 
-   dependencies:
+a, **draw_data.gpl**
 
-      a, **draw_data.gpl**
-
-      b, **showdata.bash**
+b, **showdata.bash**
 
 *, topology of the usage:
 
-               / **create_html.bash**
+                 / create_html.bash
 
-   **readlog.py** {
+    readlog.py {
 
-               \ **getstress.py**
+                 \ getstress.py
+ 
+**rdf.bash** (.psf needed, using **lmp2pdb.py**)
 
-   **rdf.bash** (.psf needed, using **lmp2pdb.py**)
-
-   **contact.bash** (.psf needed, using **lmp2pdb.py**)
+**contact.bash** (.psf needed, using **lmp2pdb.py**)
 
 ./clean.bash will do purge for this command, use it carefully.

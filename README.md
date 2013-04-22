@@ -15,10 +15,8 @@ post-run:
 
 2, **create_html.bash** dependencies:
 
-a, **draw_data.gpl**
-
-b, **showdata.bash**
-
+	a, draw_data.gpl
+	b, showdata.bash
 
 topology of the usage:
 

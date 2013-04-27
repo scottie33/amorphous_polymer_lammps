@@ -11,7 +11,7 @@ cutdis_pp=2.1*sigma_pp
 welldis_pp=pow(2,1/6.0)*sigma_pp
 
 epsilon_nn=0.25*epsilon_pp
-sigma_nn=9.2
+sigma_nn=9.2 # 4.6 6.1 or 9.2
 cutdis_nn=2.1*sigma_nn
 
 epsilon_np=4.0*epsilon_pp

@@ -7,12 +7,12 @@
 # 7 stretching.
 
 # VARIABLES
-variable fname index npt2zero
+variable fname index nvtlowtemp
 variable simname index stretching
-#variable temperature index 600
-#variable damping index 20
+variable Tdamping index 20
+variable Pdamping index 100
 variable runtimes index 1075000
-#variable teminterval index 50
+variable temperature index 600
 #variable looptime loop 8 #0-8 1000 -> 600 (by 50 each time)
 
 # Initialization
@@ -38,13 +38,13 @@ include pairfile_no_soft
 ####equi1_pair.py complete
 
 #####################################################
-# Equilibration Stage 6 (NVE stretching)
+# Equilibration Stage 7 (NVE stretching)
 variable tmp equal "lx"
 variable L0 equal ${tmp}
 variable strain equal "(lx - v_L0)/v_L0"
 variable p1 equal "v_strain"
 variable p2 equal "-pxx*0.101325"
-fix             1 all nve
+fix	            1 all npt temp ${temperature} ${temperature} ${Tdamping} y 1.0 1.0 ${Pdamping} z 1.0 1.0 ${Pdamping} drag 2
 fix             2 all deform 1 x vel 0.000011 units box remap x
 fix def1 all print 100 "${p1} ${p2}" file ${simname}.dat screen no
 thermo_style    custom step temp epair ebond ke press vol lx ly lz pxx pyy pzz pxy pxz pyz

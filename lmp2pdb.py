@@ -25,18 +25,30 @@ print >> psffp, ""
 line = fp.readline()
 
 #read numbers
+#line = fp.readline().rstrip()
+while True:
+	line = fp.readline()
+	elements = line.split()
+	if len(elements)!=0 and elements[0]!="#":
+		break
+
+if elements[1]=="atoms": 
+	natom = int(elements[0])
+else:
+	print elements[0] 
+	raise StandardError, "wrong atom number"
 line = fp.readline().rstrip()
 elements = line.split()
-if elements[1]=="atoms": natom = int(elements[0])
-else: raise StandardError, "wrong atom number"
+if len(elements)!=0 and elements[1]=="bonds": 
+	nbond = int(elements[0])
+else: 
+	raise StandardError, "wrong bond number"
 line = fp.readline().rstrip()
 elements = line.split()
-if elements[1]=="bonds": nbond = int(elements[0])
-else: raise StandardError, "wrong bond number"
-line = fp.readline().rstrip()
-elements = line.split()
-if elements[1]=="angles": nangle = int(elements[0])
-else: raise StandardError, "wrong angle number"
+if len(elements)!=0 and elements[1]=="angles": 
+	nangle = int(elements[0])
+else: 
+	print " no angles in this structure? move on..."
 
 #skip
 while True:

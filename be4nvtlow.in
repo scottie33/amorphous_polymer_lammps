@@ -4,14 +4,14 @@
 #                                      #
 ########################################
 
-# 5 nvt - deform before nvt @600k
+# 4 nvt - deform before nvt @600k
 
 # VARIABLES
 variable fname index npt2zero
 variable simname index be4nvtlow
 variable temperature index 600
 variable damping index 20
-variable runtimes index 500000
+variable runtimes index 1000000
 #variable prefactor equal ramp(0,30)
 include volume.in
 
@@ -38,7 +38,7 @@ include pairfile_no_soft
 ####equi1_pair.py complete
 
 #####################################################
-# Equilibration Stage 5 (NVT deform at 600 K to average volume) 
+# Equilibration Stage 4 (NVT deform at 600 K to average volume) 
 fix         1st all nvt temp ${temperature} ${temperature} ${damping}
 fix         3rd all deform 10 x final 0.0 ${tolx} y final 0.0 ${toly} z final 0.0 ${tolz} units box
 fix   		4th all momentum 1 linear 1 1 1

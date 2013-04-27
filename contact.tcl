@@ -68,39 +68,51 @@ set outfile2 [open $outputfile2 w]
 ;#set CPN {}
 ;#set CNP {}
 ;#set CNN {}
+
 set mol [molinfo top] 
 set nf [molinfo $mol get numframes] 
+set chainlen []
+foreach j $indices1 { ;# 
+	set tempre [atomselect $mol "index $j"]
+	set tresid [$tempre get resid]
+	$tempre delete
+	set tempcn [atomselect $mol "resid $tresid"]
+	set tempcl  [format "%.4f" [$tempcn num]]
+	lappend chainlen $tempcl
+	$tempcn delete
+}
 puts " now loading $nf into memory..."
 for { set i 0 } { $i < $nf } { incr i } {
 	molinfo $mol set frame $i
 	puts " the $i - th frame "
 	set numPP 0
-	set numPN 0
+	#set numPN 0
 	set numNP 0
-	set numNN 0
-	foreach j $indices1 { ;# P
+	#set numNN 0
+	foreach j $indices1 tempcl $chainlen { ;# P
+		#puts " $j $tempcl "
 		set tempPP [atomselect $mol "(resid $sresids to $sreside) and within $r11ranged of index $j"]
-		set tempPN [atomselect $mol "(resid $eresids to $ereside) and within $r12ranged of index $j"]
-		set numPP [expr $numPP+[$tempPP num]]
-		set numPN [expr $numPN+[$tempPN num]]
+		#set tempPN [atomselect $mol "(resid $eresids to $ereside) and within $r12ranged of index $j"]
+		set numPP [expr $numPP+[$tempPP num]-1-2*($tempcl-1)/$tempcl]
+		#set numPN [expr $numPN+[$tempPN num]]
 		$tempPP delete
-		$tempPN delete
+		#$tempPN delete
 	}
 	#puts $numPN
 	foreach j $indices2 { ;# N
 		set tempNP [atomselect $mol "(resid $sresids to $sreside) and within $r21ranged of index $j"]
-		set tempNN [atomselect $mol "(resid $eresids to $ereside) and within $r22ranged of index $j"]
+	#	set tempNN [atomselect $mol "(resid $eresids to $ereside) and within $r22ranged of index $j"]
 		set numNP [expr $numNP+[$tempNP num]]
-		set numNN [expr $numNN+[$tempNN num]]
+	#	set numNN [expr $numNN+[$tempNN num]-1]
 		$tempNP delete
-		$tempNN delete
-	}
+	#	$tempNN delete
+	#}
 	#puts $numNP
-	;#lappend CPP [expr $numPP/$numP]
-	;#lappend CPN [expr $numPN/$numP]
-	;#lappend CNP [expr $numNP/$numN]
-	;#lappend CNN [expr $numNN/$numN]
-	puts $outfile2 [format "%d %.4f %.4f %.4f %.4f" [expr $i+1] [expr $numPP/$numP] [expr $numPN/$numP] [expr $numNP/$numN] [expr $numNN/$numN]]
+	#lappend CPP [expr $numPP/$numP]
+	#lappend CPN [expr $numPN/$numP]
+	#lappend CNP [expr $numNP/$numN]
+	#lappend CNN [expr $numNN/$numN]
+	puts $outfile2 [format "%d %.4f %.4f" [expr $i+1] [expr $numPP] [expr $numNP]];# [expr $numNP/$numN] [expr $numNN/$numN]]
 }
 
 #for { set i 0 } { $i < $nf } { incr i } {

@@ -11,7 +11,7 @@ variable fname index minimization
 variable simname index nvthightemp 
 variable temperature index 1000
 variable damping index 20
-variable runtimes index 500000
+variable runtimes index 1000000
 #variable infile index in.file
 #variable prefactor equal ramp(0,30)
 

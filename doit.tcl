@@ -1,9 +1,15 @@
-proc make_whole {mol sel frame num chn} { 
+proc make_whole {mol sel frame num chn rad} { 
 	molinfo $mol set frame $frame
 	$sel frame $frame
 	set allcoord [$sel get {x y z}]
 	set num1 [expr {$num - 1}]
 	set boxhalf [vecscale 0.5 [molinfo $mol get {a b c}]] ;#box dimension half;
+	#set la [lindex boxhalf 0]
+	#set lb [lindex boxhalf 1]
+	#set lc [lindex boxhalf 2]
+	#set boxhalf {}
+	#if { [expr $num*$rad] } {
+	#}
 	set newcoord {}
 	set firstlen [expr $num*$chn]
 	set lastcoord [lrange $allcoord $firstlen end]
@@ -48,5 +54,5 @@ set mol [molinfo top]
 set ring [atomselect $mol {all}] 
 set nf [molinfo $mol get numframes] 
 for {set i 0} {$i < $nf} {incr i} {
-	make_whole $mol $ring $i 64 64;#if 100, the total number has to be 100N;
+	make_whole $mol $ring $i 64 6 4.7;#if 100, the total number has to be 100N;
 }

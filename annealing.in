@@ -54,8 +54,8 @@ unfix 1st
 label loopA
 variable currentT equal ${temperature}-${looptime}*${teminterval}
 variable currentH equal ${currentT}+${teminterval}
-variable currentD equal 20-(${temperature}-${currentT})/40.0
-print " now the ${looptime}th annealing, and T[hi]=${currentH} T[lo]=${currentT} D=${currentD}"
+variable currentD equal ${damping}*(1-(${temperature}-${currentT})/${temperature})
+print "[>> now the ${looptime}th annealing, and T[hi]=${currentH} T[lo]=${currentT} D=${currentD} <<]"
 fix   1st all nvt temp ${currentH} ${currentH} ${currentD} #
 run		${runtimes}
 unfix 1st
@@ -76,5 +76,5 @@ unfix 1st
 unfix 4th
 write_restart 	restart.${simname}.dat
 
-print " All done!"
+print "[>> All done! <<]"
 

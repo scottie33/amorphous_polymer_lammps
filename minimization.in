@@ -54,7 +54,7 @@ unfix 1st
 unfix 2nd
 write_restart 	restart.${simname}.dat
 
-print " All done!"
+print "[>> All done! <<]"
 
 
 

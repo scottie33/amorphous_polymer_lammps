@@ -61,5 +61,5 @@ unfix def2
 
 write_restart 	restart.${simname}.dat
 
-print " All done!"
+print "[>> All done! <<]"
 

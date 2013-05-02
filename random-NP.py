@@ -12,9 +12,9 @@ MASS=52.5
 start_index=nc*cl+1
 start_mol=nc+1
 NP_type=nc+1
-randoma=random.uniform(0, 10)
-randomb=random.uniform(0, 10)
-randomc=random.uniform(0, 10)
+randoma=random.uniform(0, box_size)
+randomb=random.uniform(0, box_size)
+randomc=random.uniform(0, box_size)
 NP_coord=[(randoma,randomb,randomc)]
 for i in range(1, NP_num):
 	randoma=random.uniform(0, box_size)

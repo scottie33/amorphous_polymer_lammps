@@ -92,7 +92,7 @@ for i in range(0, natom):
 	nres = int(nres)%10000
 	ndx = int(ndx)%100000
 	#print >> pdbfp, "ATOM  %5d  %s   %3s A%04d    %8.3f%8.3f%8.3f  1.00  0.00" % (ndx, atlst[typn], "LMP", nres, x, y, z)
-	print >> pdbfp, "ATOM  %5d  %s   %3s A%04d    %8.3f%8.3f%8.3f  1.00  0.00" % (ndx, typn, "LMP", nres, x, y, z)
+	print >> pdbfp, "ATOM  %5d%3s   %3s A%04d    %8.3f%8.3f%8.3f  1.00  0.00" % (ndx, typn, "LMP", nres, x, y, z)
 	#print >> psffp, "%8d A%03d%6d LMP%4s %4s                   " % (ndx, typn, nres, atlst[typn], atlst[typn])
 	print >> psffp, "%8d A%03d%6d LMP%4s %4s                   " % (ndx, typn, typn, typn, typn)
 

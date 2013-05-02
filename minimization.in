@@ -7,7 +7,7 @@
 # 0 minimization nve/limit langevin
 
 # VARIABLES
-variable fname index PE_nc64_cl64_NP99L
+variable fname index PE_nc64_cl64
 variable simname index minimization
 variable temperature index 600
 variable damping index 10

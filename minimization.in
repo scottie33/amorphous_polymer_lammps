@@ -28,8 +28,8 @@ neighbor	0.4 bin # for units real, default is 2.0 angstrom.
 					# the larger the skin distance, the less often neighbor lists need to be built, 
                     # but more pairs must be checked for possible force interactions every timestep.
 neigh_modify	every 10 one 10000
-bond_style      class2
-bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
+#bond_style      class2
+#bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
 #bond_coeff	1 4.7 0.25ev 0.0 0.125ev
 
 #special_bonds fene angle no dihedral no

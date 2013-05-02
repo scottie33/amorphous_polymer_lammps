@@ -5,7 +5,8 @@ import math
 pairfile = file ('pairfile','w')
 Polymerall=128+1
 
-epsilon_pp=1.129989
+eV2KCal=23.061 # eV - > kcal/mol
+epsilon_pp=0.049*eV2KCal
 sigma_pp=4.7
 cutdis_pp=2.1*sigma_pp
 welldis_pp=pow(2,1/6.0)*sigma_pp
@@ -18,7 +19,15 @@ epsilon_np=4.0*epsilon_pp
 sigma_np=(sigma_nn+sigma_pp)/2.0
 cutdis_np=2.1*sigma_np
 
+bond_length=4.7
+bond_coeff1=0.25*eV2KCal
+bond_coeff2=0.0
+bond_coeff3=0.50*bond_coeff1
+
 #print >> pairfile, "pair_style hybrid lj/cut 19.32 soft 10.0"
+print >> pairfile, "bond_style      class2"
+print >> pairfile, "bond_coeff	1 %f %f %f %f #kcal/mol" % (bond_length, bond_coeff1, bond_coeff2, bond_coeff3)
+print >> pairfile, " "
 print >> pairfile, "pair_style lj/cut 19.32"
 print >> pairfile, "pair_modify shift yes"
 #print >> pairfile, "pair_coeff * * lj/cut %f %f %f" % (epsilon_pp, sigma_pp, cutdis_pp)

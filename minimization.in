@@ -46,7 +46,7 @@ fix		1st all nve/limit 0.05
 fix		2nd all langevin ${temperature} ${temperature} ${damping} 904297
 
 thermo_style	custom step temp press pe ke etotal epair ebond emol vol # NVT?
-thermo          100
+thermo          1000
 timestep	2	
 dump		1 all dcd  1000 ${simname}.dcd
 run		${runtimes}

@@ -42,8 +42,8 @@ include pairfile_no_soft
 fix         1st all nvt temp ${temperature} ${temperature} ${damping} # higher the viscosity, lower damping 
 fix   		4th all momentum 1 linear 1 1 1 angular
 thermo_style	custom step temp press epair ebond vol pxx pyy pzz lx ly lz
-thermo          100
-timestep	5	
+thermo          1000
+timestep	2	
 dump		1 all dcd  1000 ${simname}.dcd
 run		${runtimes}
 unfix 1st

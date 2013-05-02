@@ -43,7 +43,7 @@ fix         1st all nvt temp ${temperature} ${temperature} ${damping}
 fix         3rd all deform 10 x final 0.0 ${tolx} y final 0.0 ${toly} z final 0.0 ${tolz} units box
 fix   		4th all momentum 1 linear 1 1 1
 thermo_style	custom step temp press epair ebond vol pxx pyy pzz lx ly lz
-thermo          100
+thermo          1000
 timestep	2	
 dump		1 all dcd 1000 ${simname}.dcd
 run		${runtimes}

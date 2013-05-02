@@ -36,6 +36,8 @@ or
 4, avevol.py (to see energy-volume and create the volume.in for the next deform.in if needed)
 Attention:
 
+5, please be noted: trajectoy_analyze.tcl is great for the analysis of trajectory loaded in VMD, read the source for the example.
+
 1, for the [keyword], we shall set it the 1st keyword of dump keywords in your .log file, normally "Step"
 2, nothing more so far...
 

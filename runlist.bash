@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PNUM=8
+PNUM=16
 EXEC=lmp_g++
 
 #echo " running premin now..."

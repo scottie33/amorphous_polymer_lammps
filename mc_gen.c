@@ -37,6 +37,8 @@ int seed;
 int n_incs;
 float lat;
 float mass;
+bool angleflag;
+bool dihedralflag;
 FILE *fp,*fq;
 char *outf,fnames[1][40];
 ATOM atom_list[MAX_ATOMS]; /*the array of atoms, the length will be Natom*/
@@ -118,6 +120,26 @@ static void read_input(void) {
   fgets(buf,sizeof(buf),fp);
   fgets(buf,sizeof(buf),fp);
   sscanf(buf,"%f",&mass);
+
+  int temp=0;
+
+  fgets(buf,sizeof(buf),fp);
+  fgets(buf,sizeof(buf),fp);
+  sscanf(buf,"%d",&temp);
+  if(temp>0) {
+    angleflag=true;
+  } else {
+    angleflag=false;
+  }
+
+  fgets(buf,sizeof(buf),fp);
+  fgets(buf,sizeof(buf),fp);
+  sscanf(buf,"%d",&temp);
+  if(temp>0) {
+    dihedralflag=true;
+  } else {
+    dihedralflag=false;
+  }
 
   printf("den %f c_leng %d n_ch %d l_s %f seed %d \n",density,c_length,n_chains,lat,seed);
 
@@ -400,7 +422,7 @@ static void write_file(void) {
   char buf[init_size];
   fgets(buf,sizeof(buf),npfp);
   sscanf(buf,"%f",&NP_mass);
-  printf("mass of np is: %f", NP_mass);
+  printf("mass of np is: %f\n", NP_mass);
   while(fgets(buf,sizeof(buf),npfp)) {
     sscanf(buf,"%d\t%d\t%d\t%f\t%f\t%f",&npindex[num_NP],&molechn[num_NP],&npchain[num_NP],
                                                 &xcoo[num_NP],&ycoo[num_NP],&zcoo[num_NP] );
@@ -454,7 +476,7 @@ static void write_file(void) {
          puts ("Error (re)allocating memory");
          exit (1);
       }
-      printf(" reallocation happnes, now the size is: %d", init_size);
+      printf(" reallocation happnes, now the size is: %d\n", init_size);
     }
   }
   fclose(npfp);
@@ -515,26 +537,30 @@ static void write_file(void) {
     atom_1++;
     atom_2++;
   }
-  /*fprintf(fq,"\nAngles \n\n");
-  count=1;
-  atom_1=1; atom_2=2; atom_3=3;
-  for(i=0;i<n_chains;i++) {
-    for(j=0;j<c_length-2;j++) {
-      fprintf(fq,"%10d%10d%10d%10d%10d\n",count,1,atom_1,atom_2,atom_3);
-      count++;
-      atom_1++; atom_2++; atom_3++;
+  if(angleflag) {
+    fprintf(fq,"\nAngles \n\n");
+    count=1;
+    atom_1=1; atom_2=2; atom_3=3;
+    for(i=0;i<n_chains;i++) {
+      for(j=0;j<c_length-2;j++) {
+        fprintf(fq,"%10d%10d%10d%10d%10d\n",count,1,atom_1,atom_2,atom_3);
+        count++;
+        atom_1++; atom_2++; atom_3++;
+      }
+      atom_1=atom_1+2; atom_2=atom_2+2; atom_3=atom_3+2;
     }
-    atom_1=atom_1+2; atom_2=atom_2+2; atom_3=atom_3+2;
+  } 
+  if(dihedralflag) {
+    fprintf(fq,"\nDihedrals \n\n");
+    count=1;
+    atom_1=1; atom_2=2; atom_3=3; atom_4=4;
+    for(i=0;i<n_chains;i++) {
+      for(j=0;j<c_length-3;j++) {
+        fprintf(fq,"%10d%10d%10d%10d%10d%10d\n",count,1,atom_1,atom_2,atom_3,atom_4);
+        count++;
+        atom_1++; atom_2++; atom_3++; atom_4++;
+      }
+      atom_1=atom_1+3; atom_2=atom_2+3; atom_3=atom_3+3; atom_4=atom_4+3;
+    }
   }
-  fprintf(fq,"\nDihedrals \n\n");
-  count=1;
-  atom_1=1; atom_2=2; atom_3=3; atom_4=4;
-  for(i=0;i<n_chains;i++) {
-    for(j=0;j<c_length-3;j++) {
-      fprintf(fq,"%10d%10d%10d%10d%10d%10d\n",count,1,atom_1,atom_2,atom_3,atom_4);
-      count++;
-      atom_1++; atom_2++; atom_3++; atom_4++;
-    }
-    atom_1=atom_1+3; atom_2=atom_2+3; atom_3=atom_3+3; atom_4=atom_4+3;
-  }*/
 }

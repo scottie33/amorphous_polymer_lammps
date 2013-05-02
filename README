@@ -3,6 +3,10 @@ pre-run:
 1, lmp2pdb.py data.data (generate .psf and .pdb for post-processing)
 2, makepair will generate a pair_potential file for you, revise it if needed.
 #2, after .dcd loaded by vmd: source doit.tcl
+3, protocol to initialization of the system:
+   a: random-NP.py (revise it mannually)
+   b: mc_gen (revise .input whenever needed)
+   c: makepair001
 
 run:
 1, runlist.bash

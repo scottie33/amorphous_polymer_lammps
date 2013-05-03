@@ -11,7 +11,7 @@ variable fname index be4nvtlow
 variable simname index nvtlowtemp
 variable temperature index 200
 variable damping index 20
-variable runtimes index 10000000
+variable runtimes index 12000000
 #variable 
 #variable 
 

@@ -11,7 +11,7 @@ variable fname index be4nvtlow
 variable simname index nvtlowtemp
 variable temperature index 200
 variable damping index 20
-variable runtimes index 5000000
+variable runtimes index 10000000
 #variable 
 #variable 
 
@@ -26,8 +26,8 @@ read_restart	restart.${fname}.dat
 # Dreiding potential information
 neighbor	0.4 bin
 neigh_modify	every 10 one 10000
-#bond_style      class2
-#bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
+bond_style      class2
+bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
 #bond_coeff	1 4.7 0.25ev 0.0 0.125ev
 
 #special_bonds fene angle no dihedral no
@@ -42,9 +42,9 @@ include pairfile_no_soft
 fix         1st all nvt temp ${temperature} ${temperature} ${damping} # higher the viscosity, lower damping 
 fix   		4th all momentum 1 linear 1 1 1 angular
 thermo_style	custom step temp press epair ebond vol pxx pyy pzz lx ly lz
-thermo          1000
+thermo          10000
 timestep	2	
-dump		1 all dcd  1000 ${simname}.dcd
+dump		1 all dcd  10000 ${simname}.dcd
 run		${runtimes}
 unfix 1st
 unfix 4th

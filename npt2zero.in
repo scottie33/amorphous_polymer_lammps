@@ -12,7 +12,7 @@ variable simname index npt2zero
 variable temperature index 200
 variable Tdamping index 20
 variable Pdamping index 100
-variable runtimes index 1000000
+variable runtimes index 12500000
 #variable 
 
 # Initialization
@@ -26,8 +26,8 @@ read_restart	restart.${fname}.dat
 # Dreiding potential information
 neighbor	0.4 bin
 neigh_modify	every 10 one 10000
-#bond_style      class2
-#bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
+bond_style      class2
+bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
 #bond_coeff	1 4.7 0.25ev 0.0 0.125ev
 
 #special_bonds fene angle no dihedral no
@@ -50,9 +50,9 @@ variable tmpen equal "etotal"
 fix   def1 all print 100 "${tmplx} ${tmply} ${tmplz}" file ${simname}.vol.dat screen no
 fix   def2 all print 100 "${tmpvo} ${tmpen}" file ${simname}.ene.dat screen no
 thermo_style    custom step temp press epair ebond pe ke etotal lx pxx pxy vol
-thermo          1000
+thermo          10000
 timestep	2
-dump 1 all dcd  1000 ${simname}.dcd
+dump 1 all dcd  10000 ${simname}.dcd
 run		${runtimes}
 unfix 1st
 unfix 2nd

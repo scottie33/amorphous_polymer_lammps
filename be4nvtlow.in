@@ -11,7 +11,7 @@ variable fname index npt2zero
 variable simname index be4nvtlow
 variable temperature index 200
 variable damping index 20
-variable runtimes index 1000000
+variable runtimes index 2000000
 #variable 
 include volume.in
 
@@ -26,8 +26,8 @@ read_restart	restart.${fname}.dat
 # Dreiding potential information
 neighbor	0.4 bin
 neigh_modify	every 10 one 10000
-#bond_style      class2
-#bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
+bond_style      class2
+bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
 #bond_coeff	1 4.7 0.25ev 0.0 0.125ev
 
 #special_bonds fene angle no dihedral no

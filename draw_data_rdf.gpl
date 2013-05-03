@@ -37,8 +37,8 @@ set xtics nomirror #font "UTF-8,12" #tc rgb "#0000ff"
 #xinterval=(xmax-xmin)/10
 #set ytics 5
 
-#set mxtics 5
-#set mytics 5
+set mxtics 5
+set mytics 5
 
 #set offsets graph <left>, <right>, <top>, <bottom>
 #set offsets graph 0, 0, 5, 0

@@ -52,6 +52,7 @@ proc my_analysis { frame } {
   #puts $indices1
   set num1 [$sel1 num]
   set num1 [format "%.4f" $num1]
+  set flag 0
   #set indices2 [$sel2 get index]
   #set num2 [$sel2 num]
   #set num2 [format "%.4f" $num2]
@@ -68,11 +69,18 @@ proc my_analysis { frame } {
   
     if { $tempnum > 0 } {
       #puts " fr-${frame} : \[ ${tempnum} aps \] in \[${ldis}:${sdis}\]"
-      set ttsel [atomselect top "within ${withindis} of index $j"]
+      set anotherid [lindex [$tempsel get index] 0]
+      puts " $j and $anotherid "
+      set ttsel [atomselect top "within ${withindis} of (index $j or index $anotherid)"]
       $ttsel writepdb ${pdbdir}/${frame}-${j}.pdb
       $ttsel delete
+      set flag 1
     }
     $tempsel delete
+    $tempnum delete
+    if { $flag != 0 } {
+      break
+    }
     #}
   } 
   #puts " end # "

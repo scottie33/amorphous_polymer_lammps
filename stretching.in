@@ -11,9 +11,9 @@ variable fname index nvtlowtemp
 variable simname index stretching
 variable Tdamping index 20
 variable Pdamping index 100
-variable runtimes index 2150000
-variable temperature index 600
-#variable looptime loop 8 #0-8 1000 -> 600 (by 50 each time)
+variable runtimes index 3000000
+variable temperature index 200
+#variable 
 
 # Initialization
 units		real

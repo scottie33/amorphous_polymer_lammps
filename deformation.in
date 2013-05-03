@@ -12,7 +12,7 @@ variable simname index deformation
 variable temperature index 1000
 variable damping index 20
 variable runtimes index 1000000
-variable deformto index 68
+variable deformto index 70
 #variable prefactor equal ramp(0,30)
 
 # Initialization

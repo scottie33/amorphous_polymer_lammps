@@ -13,7 +13,7 @@ variable temperature index 1000
 variable damping index 20
 variable runtimes index 500000 #each run.
 variable teminterval index 50
-variable looptime loop 8 #0-8 1000 -> 600 (by 50 each time)
+variable looptime loop 16 #0-8 1000 -> 600 (by 50 each time)
 
 # Initialization
 units		real

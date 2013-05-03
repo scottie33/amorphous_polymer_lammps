@@ -9,11 +9,11 @@
 # VARIABLES
 variable fname index be4nvtlow
 variable simname index nvtlowtemp
-variable temperature index 600
+variable temperature index 200
 variable damping index 20
-variable runtimes index 2500000
-#variable teminterval index 50
-#variable looptime loop 8 #0-8 1000 -> 600 (by 50 each time)
+variable runtimes index 5000000
+#variable 
+#variable 
 
 # Initialization
 units		real

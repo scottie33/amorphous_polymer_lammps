@@ -9,11 +9,11 @@
 # VARIABLES
 variable fname index annealing
 variable simname index npt2zero 
-variable temperature index 600
+variable temperature index 200
 variable Tdamping index 20
 variable Pdamping index 100
 variable runtimes index 1000000
-#variable prefactor equal ramp(0,30)
+#variable 
 
 # Initialization
 units		real

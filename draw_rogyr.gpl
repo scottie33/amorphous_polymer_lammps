@@ -45,7 +45,8 @@ set xtics nomirror #font "UTF-8,12" #tc rgb "#0000ff"
 #set key left
 set key box
 #plot for [i=2:nrep:1] "probability_each.dat" u 1:i w filledcurves title "T".i
-plot inp u 1:2 w l lt 1 lw 5 lc rgb "#003D79" title "Average Gyration"#,\
+plot inp u 1:2 w l lt 1 lw 6 lc rgb "gray" title "",\
+	inp u 1:2 smooth bezier w l lt 1 lw 3 lc rgb "#003D79" title "Average Gyration"
 
 
      #inp u 1:2:3:4 with errorbars lc rgb "#003D79" title ""

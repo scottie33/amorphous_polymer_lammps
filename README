@@ -26,6 +26,9 @@ you can use the following cli to see your data-fig:
                \ getstress.py
    rdf.bash (.psf needed, using lmp2pdb.py)
    contact.bash (.psf needed, using lmp2pdb.py) 
+   allpeak.py 
+   getpdb.bash (.psf ... )
+  
 just hit them in your command line to see 'how to'
 e.g.:
  ./readlog.py example.log
@@ -36,14 +39,13 @@ or
 
 ./clean.bash will do purge for this command, use it carefully.
 
-3, rdf.bash
-4, avevol.py (to see energy-volume and create the volume.in for the next deform.in if needed)
+*, avevol.py (to see energy-volume and create the volume.in for the next deform.in if needed)
 Attention:
 
 5, please be noted: trajectoy_analyze.tcl is great for the analysis of trajectory loaded in VMD, read the source for the example.
 
-1, for the [keyword], we shall set it the 1st keyword of dump keywords in your .log file, normally "Step"
-2, nothing more so far...
+*, for the [keyword], we shall set it the 1st keyword of dump keywords in your .log file, normally "Step"
+*, nothing more so far...
 
 
 O(ne) C(lick) S(eries): Lammps .log file.

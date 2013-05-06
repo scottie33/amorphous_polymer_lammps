@@ -56,6 +56,9 @@ variable currentT equal ${temperature}-${looptime}*${teminterval}
 variable currentH equal ${currentT}+${teminterval}
 variable currentD equal ${damping}*(1-(${temperature}-${currentT})/${temperature})
 print "[>> now the ${looptime}th annealing, and T[hi]=${currentH} T[lo]=${currentT} D=${currentD} <<]"
+fix   1st all npt temp ${currentH} ${currentH} ${currentD} iso 1.0 1.0 100 drag 2 
+run		${runtimes}
+unfix 1st
 fix   1st all nvt temp ${currentH} ${currentH} ${currentD} #
 run		${runtimes}
 unfix 1st

@@ -48,6 +48,7 @@ dump 1 all dcd 10000 ${simname}.dcd
 variable rtdecreasing equal ${runtimes}*2
 
 fix   1st all nvt temp ${temperature} ${temperature} ${damping}
+reset_timestep  0
 run		${runtimes}
 unfix 1st
 

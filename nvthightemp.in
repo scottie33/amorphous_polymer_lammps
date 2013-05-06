@@ -47,6 +47,7 @@ thermo_style	custom step temp press epair ebond vol pxx pyy pzz lx ly lz
 thermo          1000
 timestep	2	
 dump		1 all dcd  1000 ${simname}.dcd
+reset_timestep  0
 run		${runtimes}
 unfix 1st
 unfix 4th

@@ -13,7 +13,7 @@ variable temperature index 200
 variable Tdamping index 20
 variable Pdamping index 100
 variable runtimes index 12500000
-#variable 
+variable VLPRESSURE index 0.0
 
 # Initialization
 units		real
@@ -39,7 +39,7 @@ include pairfile_no_soft
 
 #####################################################
 # Equilibration Stage 4 (NPT dynamics at 600 K)
-fix   1st all npt temp ${temperature} ${temperature} ${Tdamping} iso 1.0 1.0 ${Pdamping} drag 2 
+fix   1st all npt temp ${temperature} ${temperature} ${Tdamping} iso ${VLPRESSURE} ${VLPRESSURE} ${Pdamping} drag 2 
                                                                          # drag added to damp osillation by thermostat
 fix   2nd all momentum 1 linear 1 1 1 angular
 variable tmplx equal "lx"

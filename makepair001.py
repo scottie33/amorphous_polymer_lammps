@@ -3,16 +3,20 @@
 import math
 
 pairfile = file ('pairfile','w')
-Polymerall=128+1
+Polymerall=64+1
+sigma_nn=9.2 # 4.6 6.1 or 9.2
+sigma_pp=4.7
+
+print " sigma_nn : %f" % (sigma_nn)
+print " sigma_pp : %f" % (sigma_pp)
+print " polymer chain : %d " % (Polymerall-1)
 
 eV2KCal=23.061 # eV - > kcal/mol
 epsilon_pp=0.049*eV2KCal
-sigma_pp=4.7
 cutdis_pp=2.1*sigma_pp
 welldis_pp=pow(2,1/6.0)*sigma_pp
 
 epsilon_nn=0.25*epsilon_pp
-sigma_nn=4.6 # 4.6 6.1 or 9.2
 cutdis_nn=2.1*sigma_nn
 
 epsilon_np=4.0*epsilon_pp

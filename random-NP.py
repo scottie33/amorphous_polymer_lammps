@@ -4,11 +4,19 @@ import random
 import math
 from array import array
 
-box_size=10.0
-nc=128
+box_size=50.0
+nc=64
 cl=64
-NP_num=793*2
-MASS=52.5
+perNP=0.10
+Radius=9.2
+pmass=56.0
+pradi=4.7
+MASS=pow(Radius/pradi,3.0)*pmass
+print " NP load : %f " % (perNP)
+print " NP mass : %d" % (MASS)
+NP_num=nc*cl*pmass*perNP/(1.0-perNP)/MASS
+print " NP num : %f, truncated to %d " % (NP_num, int(NP_num)) 
+NP_num=int(NP_num)
 start_index=nc*cl+1
 start_mol=nc+1
 NP_type=nc+1

@@ -24,7 +24,7 @@ you can use the following cli to see your data-fig:
                / create_html.bash
    readlog.py {
                \ getstress.py
-   rdf.bash (.psf needed, using lmp2pdb.py)
+   rdf.bash -> allpeak.py -> getpdb.bash (.psf needed, using lmp2pdb.py)
    contact.bash (.psf needed, using lmp2pdb.py) 
    allpeak.py 
    getpdb.bash (.psf ... )

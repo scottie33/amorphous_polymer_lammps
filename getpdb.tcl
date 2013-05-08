@@ -171,8 +171,37 @@ proc my_analysis { frame } {
       #set tempdis [format "%.3f" $tempdis]
       set tempdis [format "%.3f" [veclength [vecsub $coora $coorb]]]
       #puts $tempdis
-      $ttsel writepdb ${pdbdir}/${frame}-${j}-${anotherid}-${tempdis}.pdb
-      $ttsel delete
+      set tname ${pdbdir}/${frame}-${j}-${anotherid}-${tempdis}.pdb
+      $ttsel writepdb $tname
+      
+      set templist [$ttsel get {resid index}]
+      set tnum [$ttsel num]
+      puts " there are $tnum atoms in this pdb file."
+      set tfp [open $tname a]
+      #CONECT    1    2
+      for { set k 1 } { $k < $tnum } { incr k } {
+        #puts "$k"
+        set alist [lindex $templist [expr $k-1]] 
+        set blist [lindex $templist $k]
+        foreach {aresid aindex} $alist {bresid bindex} $blist {
+          #puts " $aresid $bresid"
+          #puts " $aindex $bindex"
+          if { $aresid == $bresid } {
+            if { [expr $bindex-$aindex] == 1 } { 
+              #puts "..."
+              puts $tfp [format "CONECT%5d%5d" $k [expr $k+1]]
+              #puts "???"
+            }
+          }
+        }
+        #$alist delete
+        #$blist delete
+      }
+      #$templist delete
+      close $tfp
+      puts " file: \[ $tname \] closed"
+      #$ttsel delete
+      exec ./pdb2psf.py $tname
       set flag 1
     }
     $tempsel delete

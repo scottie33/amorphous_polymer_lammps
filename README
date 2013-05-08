@@ -28,6 +28,7 @@ you can use the following cli to see your data-fig:
    readlog.py {
                \ getstress.py
    rdf.bash -> allpeak.py -> getpdb.bash (.psf needed, using lmp2pdb.py)
+   calcrho.py ( using grdf.dat, draw_data_rho.gpl needed)
    contact.bash (.psf needed, using lmp2pdb.py) 
    allpeak.py 
    getpdb.bash (.psf ... )

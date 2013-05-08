@@ -15,7 +15,7 @@ MASS=pow(Radius/pradi,3.0)*pmass
 print " NP load : %f " % (perNP)
 print " NP mass : %d" % (MASS)
 NP_num=nc*cl*pmass*perNP/(1.0-perNP)/MASS
-print " NP num : %f, truncated to %d " % (NP_num, int(NP_num)) 
+print " NP numb : %f, truncated to %d " % (NP_num, int(NP_num)) 
 NP_num=int(NP_num)
 start_index=nc*cl+1
 start_mol=nc+1

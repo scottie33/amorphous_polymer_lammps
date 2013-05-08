@@ -1,3 +1,6 @@
+to get the newest version:
+
+ wget https://github.com/scottie33/amorphous_polymer_lammps/archive/master.zip 
 
 pre-run: 
 1, lmp2pdb.py data.data (generate .psf and .pdb for post-processing)

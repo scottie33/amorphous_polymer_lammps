@@ -32,4 +32,7 @@ echo "ylabeltext='Distribution'" >> tempdata.gpl
 gnuplot draw_data_rdf.gpl
 echo " check out your [ Grdf.eps ] :)"
 #######################################
+
+./calcrho.py grdf.dat
+
 exit 0 

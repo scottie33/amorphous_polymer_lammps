@@ -59,7 +59,7 @@ puts " versus "
 puts " resid: $eresids to $ereside" 
 puts " now RDF calculation start, please wait ..."
 set outfp1 [open $outputfile1 w]
-set gr0 [measure gofr $sel1 $sel2 delta 0.05 rmax 20.0 usepbc 1 selupdate 1 first 0 last -1 step 1]
+set gr0 [measure gofr $sel1 $sel2 delta 0.025 rmax 50.0 usepbc 1 selupdate 1 first 0 last -1 step 1]
 set r [lindex $gr0 0]
 set gr [lindex $gr0 1]
 set igr [lindex $gr0 2]
@@ -69,6 +69,7 @@ foreach j $r k $gr l $igr m $isto {
 }
 close $outfp1
 puts " you have your RDF \[$outputfile1\] now, we then shall do the contacting number parts."
+
 
 exit
 

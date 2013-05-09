@@ -98,7 +98,10 @@ for i in range(0, natom):
 
 while True:
         line = fp.readline()
-        elements = line.split()
+        if line:
+        	elements = line.split()
+        else:
+        	break
         if len(elements) == 0: continue
         if elements[0] == "Bonds": break
 

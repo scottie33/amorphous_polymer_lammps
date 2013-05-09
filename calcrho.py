@@ -3,6 +3,10 @@ import sys,os
 
 import math
 
+
+KBoltzmann=1.0
+Temperature=1.0
+tempMax=20.0
 vlpi=math.acos(-1.0)
 
 if len(sys.argv) < 2: 
@@ -39,13 +43,23 @@ fp.close();
 integral1=0.0
 integral2=0.0
 i = 0
-print >> rhofp, "%.6f\t%.6f" % (distlist[i], datalist[i])
+SVCoeff=0.0
+print >> rhofp, "%.6f\t%.6f\t%.6f" % (distlist[i], datalist[i],tempMax)
 for i in range(1, natom):
 	temp=4*vlpi*distlist[i]*distlist[i]*(distlist[i]-distlist[i-1])
 	integral1+=temp
 	integral2+=temp*datalist[i]
+	tRho=integral2/integral1
+	if abs(tRho-0.0)<1e-12:
+		tVr=tempMax 
+		#SVCoeff+=0.5*temp
+	else :
+		tVr=-KBoltzmann*Temperature*math.log(tRho) 
+		#SVCoeff+=0.5*(tRho-1.0)*temp
+	SVCoeff+=0.5*(tRho-1.0)*temp
    #print >> pdbfp, "ATOM  %5d  %s   %3s A%04d    %8.3f%8.3f%8.3f  1.00  0.00" % (ndx, atlst[typn], "LMP", nres, x, y, z)
-	print >> rhofp, "%.6f\t%.6f" % (distlist[i], integral2/integral1)
+	print >> rhofp, "%.6f\t%.6f\t%.6f" % (distlist[i], tRho, tVr)
+print " {*} The Second Virial Coefficient (B2) is: [ %f ] <<< pay attention >>>" % (SVCoeff)
 
 
 rhofp.close();
@@ -64,6 +78,21 @@ print >> tempgplfp, "xlabeltext='Distance (Angstrom)'"
 print >> tempgplfp, "ylabeltext='Rho'"
 tempgplfp.close()
 
-os.system("gnuplot draw_data_rho.gpl")
+os.system("gnuplot draw_data_rdf.gpl")
 
 print " now you can check file: [ Rho-Distance.eps ]."
+
+
+tempgplfp=open("tempdata.gpl",'w')
+print >> tempgplfp, "inp='rhodata.dat'"
+print >> tempgplfp, "out='Vr-Distance'"
+print >> tempgplfp, "colx=1"
+print >> tempgplfp, "coly=3"
+print >> tempgplfp, "xlabeltext='Distance (Angstrom)'"
+print >> tempgplfp, "ylabeltext='V(r)'"
+tempgplfp.close()
+
+os.system("gnuplot draw_data_vr.gpl")
+
+print " now you can check file: [ Vr-Distance.eps ]."
+

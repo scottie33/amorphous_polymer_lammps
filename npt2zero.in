@@ -50,7 +50,7 @@ variable tmpen equal "etotal"
 fix   def1 all print 100 "${tmplx} ${tmply} ${tmplz}" file ${simname}.vol.dat screen no
 fix   def2 all print 100 "${tmpvo} ${tmpen}" file ${simname}.ene.dat screen no
 thermo_style    custom step temp press epair ebond pe ke etotal lx pxx pxy vol
-thermo          10000
+thermo          100
 timestep	2
 dump 1 all dcd  10000 ${simname}.dcd
 reset_timestep  0

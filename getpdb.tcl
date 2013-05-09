@@ -140,7 +140,7 @@ proc my_analysis { frame } {
       #puts " $j : $coortemp not in this range"
       continue
     }
-    set tempsel [atomselect top "(x>$pos_xmin and x<$pos_xmax and y>$pos_ymin and y<$pos_ymax and z>$pos_zmin and z<${pos_zmax}) and (resid $eresids to $ereside) and (within $ldis of index $j) and not (within $sdis of index $j)"]
+    set tempsel [atomselect top "(resid $eresids to $ereside) and (within $ldis of index $j) and not (within $sdis of index $j)"]
     #puts "here"
     #if { $tempsel } {
     #set "1..."

@@ -25,10 +25,10 @@ puts " 2<->1, will calculate in distance (0:$r21ranged]"
 
 mol load psf $inputpsf dcd $inputdcd
 
-if { $sreside > $eresids } {
-	puts " you can not specify resid like this: $sreside > $eresids"
-	exit
-}
+#if { $sreside > $eresids } {
+#	puts " you can not specify resid like this: $sreside > $eresids"
+#	exit
+#}
 
 if { $sresids < $sreside } {
 	set sel1 [atomselect top "resid $sresids to $sreside"]

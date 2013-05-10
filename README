@@ -31,6 +31,7 @@ you can use the following cli to see your data-fig:
    calcrho.py ( using grdf.dat, draw_data_rho.gpl needed)
    contact.bash (.psf needed, using lmp2pdb.py) 
    allpeak.py 
+   calcRG.py
    getpdb.bash (.psf ... )
   
 just hit them in your command line to see 'how to'

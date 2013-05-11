@@ -419,7 +419,22 @@ static void write_file(void) {
   zcoo=(float*)malloc(init_size* sizeof(float));
   bool flag_realloc;
   flag_realloc=true;
-  char buf[init_size];
+  char buf[init_size]; 
+  float xlo, xhi;
+  float ylo, yhi;
+  float zlo, zhi;
+  char temp1[20]; 
+  char temp2[20];
+  fgets(buf,sizeof(buf),npfp);
+  sscanf(buf,"%10f%10f %s %s",&xlo, &xhi, temp1, temp2);
+  //printf(" %s: %f %s: %f\n", temp1, xlo, temp2, xhi);
+  fgets(buf,sizeof(buf),npfp);
+  sscanf(buf,"%10f%10f %s %s",&ylo, &yhi, temp1, temp2);
+  //printf(" %s: %f %s: %f\n", temp1, ylo, temp2, yhi);
+  fgets(buf,sizeof(buf),npfp);
+  sscanf(buf,"%10f%10f %s %s",&zlo, &zhi, temp1, temp2);
+  //printf(" %s: %f %s: %f\n", temp1, zlo, temp2, zhi);
+  //getchar();
   fgets(buf,sizeof(buf),npfp);
   sscanf(buf,"%f",&NP_mass);
   printf("mass of np is: %f\n", NP_mass);
@@ -493,9 +508,27 @@ static void write_file(void) {
   //fprintf(fq,"%10d     angle types\n",1);
   //fprintf(fq,"%10d     dihedral types\n",1);
   fprintf(fq, "\n");
-  fprintf(fq,"%10.4f%10.4f xlo xhi\n",0.0,(double)n_incs*lat);
-  fprintf(fq,"%10.4f%10.4f ylo yhi\n",0.0,(double)n_incs*lat);
-  fprintf(fq,"%10.4f%10.4f zlo zhi\n\n",0.0,(double)n_incs*lat);
+  if( xlo>0.0 ) {
+    xlo=0.0;
+  }
+  if( xhi< (double)n_incs*lat ) {
+    xhi=(double)n_incs*lat;
+  }
+  if( ylo>0.0 ) {
+    ylo=0.0;
+  }
+  if( yhi< (double)n_incs*lat ) {
+    yhi=(double)n_incs*lat;
+  }
+  if( zlo>0.0 ) {
+    zlo=0.0;
+  }
+  if( zhi< (double)n_incs*lat ) {
+    zhi=(double)n_incs*lat;
+  }
+  fprintf(fq,"%10.4f%10.4f xlo xhi\n",xlo,xhi);
+  fprintf(fq,"%10.4f%10.4f ylo yhi\n",ylo,yhi);
+  fprintf(fq,"%10.4f%10.4f zlo zhi\n\n",zlo,zhi);
   fprintf(fq,"Masses\n\n");
   for(i=0; i<n_chains; i++) {
     fprintf(fq,"%10d %14.2f\n",i+1,mass); 

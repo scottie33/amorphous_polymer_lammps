@@ -7,9 +7,9 @@ pre-run:
 [goto 3]*2*, makepair will generate a pair_potential file for you, revise it if needed.
 [dont use this when system too compressed]#2, after .dcd loaded by vmd: source doit.tcl
 3, protocol to initialization of the system:
-   a: random-NP.py (revise it mannually)
+   a: random-NP.py | cubic-NP.py (revise it mannually)
    b: mc_gen.bash [make_mc_gen.x] [mc_gen] (revise .input whenever needed)
-   c: makepair001 
+   c: makepair001.py | makepair_expand.py
       mv pairfile pairfile_no_soft (please do not ask why...)
 
 run:
@@ -32,7 +32,8 @@ you can use the following cli to see your data-fig:
    contact.bash (.psf needed, using lmp2pdb.py) 
    allpeak.py 
    getpdb.bash (.psf ... )
-  
+
+currently dir ./oneNP/ will show you a protocol of a huge NP (scaled as the RG of ea. polymer) with polymers.  
 just hit them in your command line to see 'how to'
 e.g.:
  ./readlog.py example.log

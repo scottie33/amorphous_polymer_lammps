@@ -4,7 +4,7 @@ import random
 import math
 from array import array
 
-box_size=80
+box_size=100
 nc=16
 cl=64
 
@@ -12,7 +12,8 @@ nn_sigma=4.7
 NP_num=1
 offset=0.0 # isotropically offsetting the com of NP-lattice (all nps).
 perNP=0.8  # if NP_num == 0 this will be used to generate the specified mass loading...
-Radius=37.6
+
+Radius=37.6/2.00
 pmass=56.0
 pradi=4.7 #polymer radii
 start_index=nc*cl+1
@@ -20,10 +21,10 @@ start_mol=nc+1
 NP_type=nc+1
 
 MASS=pow(Radius/pradi,3.0)*pmass
-print " NP load : %f " % (perNP)
 print " NP mass : %d" % (MASS)
 if NP_num==0:
 	NP_num=nc*cl*pmass*perNP/(1.0-perNP)/MASS
+	print " NP load : %f " % (perNP)
 	print " NP numb : %f, truncated to %d " % (NP_num, int(NP_num)) 
 	NP_num=int(NP_num)
 else:
@@ -34,11 +35,12 @@ NP_single=int(pow(NP_num, 1/3.0))
 dimension=box_size/NP_single
 
 nn_dis=4.7*math.pow(2, 1/6.0)
-nn_dis=nn_dis+2*Radius
+nn_dis=nn_dis+2*Radius #?diameter?
+print " the distance between n-n is %f" % (nn_dis)
 if dimension < nn_dis :
 	dimension = nn_dis
 	box_size=NP_single*nn_dis
-	print " the distance between n-n is %f;\n and the box_size is : %f" % (nn_dis, box_size)
+	print " and the box_size is : %f" % (box_size)
 
 
 NP_coord=[]

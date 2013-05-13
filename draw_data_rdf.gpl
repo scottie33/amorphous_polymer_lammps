@@ -11,8 +11,8 @@ colx=1
 coly=2
 xlabeltext='xlabel'
 ylabeltext='ylabel'
-#xmin=0
-#xmax=100
+xmin=0
+xmax=35
 #ymin=0
 #ymax=100
 load "tempdata.gpl"
@@ -28,7 +28,7 @@ set xlabel xlabeltext #font "Arial,16"# tc rgb "#0000ff"
 #set encoding default
 set ylabel ylabeltext #font "UTF-8,16"# tc rgb "#880000"
 
-#set xrange [xmin:xmax]
+set xrange [xmin:xmax]
 #set yrange [ymin:ymax]
 
 set ytics nomirror #font "UTF-8,12" #tc rgb "#880000"
@@ -47,7 +47,7 @@ set mytics 5
 #set style fill transparent solid 0.1 noborder
 #set key left
 set key box
-set arrow 1 from 0,1 to 10,1 nohead lt 4 lw 4 lc rgb "gray"
+set arrow 1 from xmin,1 to xmax,1 nohead lt 4 lw 4 lc rgb "gray"
 #plot for [i=2:nrep:1] "probability_each.dat" u 1:i w filledcurves title "T".i
 plot inp u colx:coly w l lt 1 lw 6 lc rgb "black" title out#,\
 #plot inp u colx:coly smooth bezier w l lt 1 lw 4 lc rgb "#003D79" title out#,\

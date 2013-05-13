@@ -29,7 +29,7 @@ set pdbdir "."
 source tempinput.tcl
 set ldis [expr $distance+$deltadis]
 set sdis [expr $distance-$deltadis]
-puts " searching all pairs of dis \[${ldis}:${sdis}\]"
+puts " searching all pairs of dis \[${sdis}:${ldis}\]"
 set posflag 0
 set pos_xmin 0.0
 set pos_xmax 0.0
@@ -37,7 +37,7 @@ set pos_ymin 0.0
 set pos_ymax 0.0
 set pos_zmin 0.0
 set pos_zmax 0.0
-set fraction 0.2
+set fraction 0.25
 #set mydata {}
 
 proc my_analysis { frame } {
@@ -54,18 +54,7 @@ proc my_analysis { frame } {
   global ldis
   global sdis
   global pdbdir
-  set sel1 [atomselect top "resid ${sresids} to ${sreside}"]
-  #set sel2 [atomselect top "resid ${eresids} to ${ereside}"]
-  set indices1 [$sel1 get index]
-  #puts $indices1
-  set num1 [$sel1 num]
-  set num1 [format "%.4f" $num1]
-  set flag 0
-  #set indices2 [$sel2 get index]
-  #set num2 [$sel2 num]
-  #set num2 [format "%.4f" $num2]
-  #puts " there'are $num1 and $num2 items in the 1st and 2nd selections respectively."
-  #puts -nonewline " \[$num1 items\] :"
+  
   #lappend mydata [measure center $sel]
   global posflag
  
@@ -124,28 +113,34 @@ proc my_analysis { frame } {
     set posflag 1
     #exit -1
   } 
-
+  set sel1 [atomselect top "(x>$pos_xmin and x<$pos_xmax and y>$pos_ymin and y<$pos_ymax and z>$pos_zmin and z<${pos_zmax}) and resid ${sresids} to ${sreside}"]
+  set sel2 [atomselect top "resid ${eresids} to ${ereside}"]
+  set indices1 [$sel1 get index]
+  #puts $indices1
+  set num1 [$sel1 num]
+  set num1 [format "%.4f" $num1]
+  set flag 0
+  set indices2 [$sel2 get index]
+  set num2 [$sel2 num]
+  set num2 [format "%.4f" $num2]
+  puts " there'are $num1 and $num2 items in the 1st and 2nd selections respectively."
+  #puts -nonewline " \[$num1 items\] :"
   #puts "0dsfsdf"
   foreach j $indices1 { ;# P
     #puts -nonewline " here I am :"
     #puts " hell : $eresids $ereside $ldis $sdis $j"
     # (resid 1 to 64) and (within 10 of index 65) and not (within 8 of index 65)
     #puts "here"
-    set tempfirsel [atomselect top "(x>$pos_xmin and x<$pos_xmax and y>$pos_ymin and y<$pos_ymax and z>$pos_zmin and z<${pos_zmax}) and (index $j)"]
-    set tempfirnum [$tempfirsel num]
-    set coortemp [$tempfirsel get {x y z}]
-    $tempfirsel delete
+    #set tempfirsel [atomselect top "index $j"]
+    #set coortemp [$tempfirsel get {x y z}]
+    #$tempfirsel delete
     #puts "what?"
-    if { $tempfirnum != 1 } {
-      #puts " $j : $coortemp not in this range"
-      continue
-    }
-    set tempsel [atomselect top "(resid $eresids to $ereside) and (within $ldis of index $j) and not (within $sdis of index $j)"]
+    set tempsel [atomselect top "(index $indices2) and (within $ldis of index $j) and not (within $sdis of index $j)"]
     #puts "here"
     #if { $tempsel } {
     #set "1..."
     set tempnum [${tempsel} num]
-  
+    #puts $tempnum
     if { $tempnum > 0 } {
       #puts "miao miao"
       #puts " fr-${frame} : \[ ${tempnum} aps \] in \[${ldis}:${sdis}\]"
@@ -214,9 +209,9 @@ proc my_analysis { frame } {
   } 
   #puts " end # "
   $sel1 delete
-  #$sel2 delete
+  $sel2 delete
   $indices1 delete
-  #$indices2 delete
+  $indices2 delete
 }
 
 

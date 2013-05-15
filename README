@@ -8,6 +8,7 @@ pre-run:
 [dont use this when system too compressed]#2, after .dcd loaded by vmd: source doit.tcl
 3, protocol to initialization of the system:
    a: random-NP.py | cubic-NP.py (revise it mannually)
+   * before mc_gen, please delete NP.dat if there's no NanoParticle in your system;
    b: mc_gen.bash [make_mc_gen.x] [mc_gen] (revise .input whenever needed)
    c: makepair001.py | makepair_expand.py
       mv pairfile pairfile_no_soft (please do not ask why...)

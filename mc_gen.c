@@ -390,12 +390,7 @@ static void write_file(void) {
   fprintf(fq,"ZONE F=POINT\n");*/
 
   int num_NP=0;
-  FILE* npfp;
-  npfp = fopen("NP.dat","r");  
-  if(npfp==NULL) {
-    printf(" [ NP.dat ] not found\n");
-    exit(1);
-  }
+  
   float NP_mass=0.0;
   int* npindex; 
   int* tnpindex;
@@ -425,77 +420,83 @@ static void write_file(void) {
   float zlo, zhi;
   char temp1[20]; 
   char temp2[20];
-  fgets(buf,sizeof(buf),npfp);
-  sscanf(buf,"%10f%10f %s %s",&xlo, &xhi, temp1, temp2);
-  //printf(" %s: %f %s: %f\n", temp1, xlo, temp2, xhi);
-  fgets(buf,sizeof(buf),npfp);
-  sscanf(buf,"%10f%10f %s %s",&ylo, &yhi, temp1, temp2);
-  //printf(" %s: %f %s: %f\n", temp1, ylo, temp2, yhi);
-  fgets(buf,sizeof(buf),npfp);
-  sscanf(buf,"%10f%10f %s %s",&zlo, &zhi, temp1, temp2);
-  //printf(" %s: %f %s: %f\n", temp1, zlo, temp2, zhi);
-  //getchar();
-  fgets(buf,sizeof(buf),npfp);
-  sscanf(buf,"%f",&NP_mass);
-  printf("mass of np is: %f\n", NP_mass);
-  while(fgets(buf,sizeof(buf),npfp)) {
-    sscanf(buf,"%d\t%d\t%d\t%f\t%f\t%f",&npindex[num_NP],&molechn[num_NP],&npchain[num_NP],
-                                                &xcoo[num_NP],&ycoo[num_NP],&zcoo[num_NP] );
+  FILE* npfp;
+  npfp = fopen("NP.dat","r");  
+  if(npfp==NULL) {
+    printf(" [ NP.dat ] not found\n");
+    //exit(1);
+  } else {
+    fgets(buf,sizeof(buf),npfp);
+    sscanf(buf,"%10f%10f %s %s",&xlo, &xhi, temp1, temp2);
+    //printf(" %s: %f %s: %f\n", temp1, xlo, temp2, xhi);
+    fgets(buf,sizeof(buf),npfp);
+    sscanf(buf,"%10f%10f %s %s",&ylo, &yhi, temp1, temp2);
+    //printf(" %s: %f %s: %f\n", temp1, ylo, temp2, yhi);
+    fgets(buf,sizeof(buf),npfp);
+    sscanf(buf,"%10f%10f %s %s",&zlo, &zhi, temp1, temp2);
+    //printf(" %s: %f %s: %f\n", temp1, zlo, temp2, zhi);
+    //getchar();
+    fgets(buf,sizeof(buf),npfp);
+    sscanf(buf,"%f",&NP_mass);
+    printf("mass of np is: %f\n", NP_mass);
+    while(fgets(buf,sizeof(buf),npfp)) {
+      sscanf(buf,"%d\t%d\t%d\t%f\t%f\t%f",&npindex[num_NP],&molechn[num_NP],&npchain[num_NP],
+                                                  &xcoo[num_NP],&ycoo[num_NP],&zcoo[num_NP] );
 
-    num_NP++;
-    if(num_NP>=init_size) {
-      init_size+=app_size;
-      tnpindex = (int *) realloc (npindex, init_size * sizeof(int) );
-      if(tnpindex!=NULL) {
-        npindex=tnpindex;
-      } else {
-        flag_realloc=false;
+      num_NP++;
+      if(num_NP>=init_size) {
+        init_size+=app_size;
+        tnpindex = (int *) realloc (npindex, init_size * sizeof(int) );
+        if(tnpindex!=NULL) {
+          npindex=tnpindex;
+        } else {
+          flag_realloc=false;
+        }
+        tmolechn = (int *) realloc (molechn, init_size * sizeof(int) );
+        if(tmolechn!=NULL) {
+          molechn=tmolechn;
+        } else {
+          flag_realloc=false;
+        }
+        tnpchain = (int *) realloc (npchain, init_size * sizeof(int) );
+        if(tnpchain!=NULL) {
+          npchain=tnpchain;
+        } else {
+          flag_realloc=false;
+        }
+        txcoo = (float *) realloc (xcoo, init_size * sizeof(float) );
+        if(txcoo!=NULL) {
+          xcoo=txcoo;
+        } else {
+          flag_realloc=false;
+        }
+        tycoo = (float *) realloc (ycoo, init_size * sizeof(float) );
+        if(tycoo!=NULL) {
+          ycoo=tycoo;
+        } else {
+          flag_realloc=false;
+        }
+        tzcoo = (float *) realloc (zcoo, init_size * sizeof(float) );
+        if(tzcoo!=NULL) {
+          zcoo=tzcoo;
+        } else {
+          flag_realloc=false;
+        }
+        if(!flag_realloc) {
+           free (npindex);
+           free (molechn);
+           free (npchain);
+           free (xcoo);
+           free (ycoo);
+           free (zcoo);
+           puts ("Error (re)allocating memory");
+           exit (1);
+        }
+        printf(" reallocation happnes, now the size is: %d\n", init_size);
       }
-      tmolechn = (int *) realloc (molechn, init_size * sizeof(int) );
-      if(tmolechn!=NULL) {
-        molechn=tmolechn;
-      } else {
-        flag_realloc=false;
-      }
-      tnpchain = (int *) realloc (npchain, init_size * sizeof(int) );
-      if(tnpchain!=NULL) {
-        npchain=tnpchain;
-      } else {
-        flag_realloc=false;
-      }
-      txcoo = (float *) realloc (xcoo, init_size * sizeof(float) );
-      if(txcoo!=NULL) {
-        xcoo=txcoo;
-      } else {
-        flag_realloc=false;
-      }
-      tycoo = (float *) realloc (ycoo, init_size * sizeof(float) );
-      if(tycoo!=NULL) {
-        ycoo=tycoo;
-      } else {
-        flag_realloc=false;
-      }
-      tzcoo = (float *) realloc (zcoo, init_size * sizeof(float) );
-      if(tzcoo!=NULL) {
-        zcoo=tzcoo;
-      } else {
-        flag_realloc=false;
-      }
-      if(!flag_realloc) {
-         free (npindex);
-         free (molechn);
-         free (npchain);
-         free (xcoo);
-         free (ycoo);
-         free (zcoo);
-         puts ("Error (re)allocating memory");
-         exit (1);
-      }
-      printf(" reallocation happnes, now the size is: %d\n", init_size);
     }
+    fclose(npfp);
   }
-  fclose(npfp);
-
   printf("entered\n");
   fprintf(fq,"# Model for PE\n\n");
   fprintf(fq,"%10d     atoms\n",natom+num_NP);

@@ -534,7 +534,9 @@ static void write_file(void) {
   for(i=0; i<n_chains; i++) {
     fprintf(fq,"%10d %14.2f\n",i+1,mass); 
   }
-  fprintf(fq,"%10d %14.2f\n",i+1,NP_mass); 
+  if(num_NP!=0) {
+    fprintf(fq,"%10d %14.2f\n",i+1,NP_mass); 
+  }
   fprintf(fq,"\nAtoms\n\n");
  
   for(i=0;i<natom;i++) {

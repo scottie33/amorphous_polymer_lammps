@@ -11,7 +11,7 @@ variable fname index PE_nc19_cl64
 variable simname index minimization
 variable temperature index 600
 variable damping index 10
-variable runtimes index 500000
+variable runtimes index 1000000
 #variable infile index in.file
 #variable prefactor equal ramp(0,30)
 

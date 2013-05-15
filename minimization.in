@@ -7,7 +7,7 @@
 # 0 minimization nve/limit langevin
 
 # VARIABLES
-variable fname index PE_nc64_cl64
+variable fname index PE_nc19_cl64
 variable simname index minimization
 variable temperature index 600
 variable damping index 10
@@ -36,14 +36,15 @@ neigh_modify	every 10 one 10000
 special_bonds lj 0.0 1.0 1.0
 
 #####equi1_pair.py data
-include pairfile_no_soft
+include pairfile_rep
 ####equi1_pair.py complete
 #pair_write 64 1 500 r 4.5 7 ljtable.txt lj/cut
 #####################################################
 # Equilibration Stage 0 (Langevin dynamics at 600 K)
-velocity 	all create ${temperature} 1231
-fix		1st all nve/limit 0.05
-fix		2nd all langevin ${temperature} ${temperature} ${damping} 904297
+velocity 	pp create ${temperature} 1231
+fix		1st pp nve/limit 0.05
+fix		2nd pp langevin ${temperature} ${temperature} ${damping} 904297
+fix     3rd np move linear 0 0 0 units box
 
 thermo_style	custom step temp press pe ke etotal epair ebond emol vol # NVT?
 thermo          1000
@@ -53,6 +54,7 @@ reset_timestep  0
 run		${runtimes}
 unfix 1st
 unfix 2nd
+unfix 3rd
 write_restart 	restart.${simname}.dat
 
 print "[>> All done! <<]"

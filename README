@@ -11,7 +11,7 @@ pre-run:
    * before mc_gen, please delete NP.dat if there's no NanoParticle in your system;
    b: mc_gen.bash [make_mc_gen.x] [mc_gen] (revise .input whenever needed)
    c: makepair001.py | makepair_expand.py
-      mv pairfile pairfile_no_soft (please do not ask why...)
+      mv pairfile pairfile_rep (repel for minimization) | pairfile_no_soft (please do not ask why...)
 
 run:
 1, runlist.bash

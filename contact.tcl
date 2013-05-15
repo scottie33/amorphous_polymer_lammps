@@ -7,8 +7,8 @@ set sresids 1
 set sreside 64
 set eresids 65
 set ereside 65
-set r1 4.7
-set r2 4.7
+set r1 1.0
+set r2 1.0
 source "tempinput.tcl"
 set range [expr 1.1*[expr pow(2.0,1.0/6.0)]]
 set r11ranged [expr $r1*$range]
@@ -25,10 +25,10 @@ puts " 2<->1, will calculate in distance (0:$r21ranged]"
 
 mol load psf $inputpsf dcd $inputdcd
 
-#if { $sreside > $eresids } {
-#	puts " you can not specify resid like this: $sreside > $eresids"
-#	exit
-#}
+if { $sreside > $eresids } {
+	puts " you can not specify resid like this: $sreside > $eresids"
+	exit
+}
 
 if { $sresids < $sreside } {
 	set sel1 [atomselect top "resid $sresids to $sreside"]
@@ -41,6 +41,7 @@ if { $sresids < $sreside } {
 
 set indices1 [$sel1 get index]
 set numP [$sel1 num]
+$sel1 delete
 set numP [format "%.4f" $numP]
 puts " there's $numP items in the 1st choice."
 
@@ -55,6 +56,7 @@ if { $eresids < $ereside } {
 
 set indices2 [$sel2 get index]
 set numN [$sel2 num]
+$sel2 delete
 set numN [format "%.4f" $numN]
 puts " there's $numN items in the 2nd choice."
 
@@ -72,9 +74,11 @@ set outfile2 [open $outputfile2 w]
 set mol [molinfo top] 
 set nf [molinfo $mol get numframes] 
 set chainlen []
+set resilist []
 foreach j $indices1 { ;# 
 	set tempre [atomselect $mol "index $j"]
 	set tresid [$tempre get resid]
+	lappend resilist $tresid
 	$tempre delete
 	set tempcn [atomselect $mol "resid $tresid"]
 	set tempcl  [format "%.4f" [$tempcn num]]
@@ -89,24 +93,20 @@ for { set i 0 } { $i < $nf } { incr i } {
 	#set numPN 0
 	set numNP 0
 	#set numNN 0
-	foreach j $indices1 tempcl $chainlen { ;# P
+	foreach j $indices1 tempcl $chainlen tresid $resilist { ;# P
 		#puts " $j $tempcl "
-		set tempPP [atomselect $mol "(resid $sresids to $sreside) and within $r11ranged of index $j"]
-		#set tempPN [atomselect $mol "(resid $eresids to $ereside) and within $r12ranged of index $j"]
-		set numPP [expr $numPP+[$tempPP num]-1-2*($tempcl-1)/$tempcl]
-		#set numPN [expr $numPN+[$tempPN num]]
+		set tempPP [atomselect $mol "(resid $sresids to $sreside) and (not resid $tresid) and (within $r11ranged of index $j)"]
+		#set numPP [expr $numPP+[$tempPP num]-1-2*($tempcl-1)/$tempcl] # with intra-contacts calculated
+		set numPP [expr $numPP+[$tempPP num]]
 		$tempPP delete
 		#$tempPN delete
-	}
-	#puts $numPN
-	foreach j $indices2 { ;# N
-		set tempNP [atomselect $mol "(resid $sresids to $sreside) and within $r21ranged of index $j"]
+		set tempNP [atomselect $mol "(within $r12ranged of index $j) and (resid $eresids to $ereside)"]
 	#	set tempNN [atomselect $mol "(resid $eresids to $ereside) and within $r22ranged of index $j"]
 		set numNP [expr $numNP+[$tempNP num]]
 	#	set numNN [expr $numNN+[$tempNN num]-1]
 		$tempNP delete
 	#	$tempNN delete
-	#}
+	}
 	#puts $numNP
 	#lappend CPP [expr $numPP/$numP]
 	#lappend CPN [expr $numPN/$numP]

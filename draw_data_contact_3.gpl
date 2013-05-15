@@ -55,12 +55,8 @@ set xtics nomirror #font "UTF-8,12" #tc rgb "#0000ff"
 #	 inp u colx:($2*num1/totnum) smooth bezier w l lt 1 lw 4 lc rgb "orange" title "PP",\
 
 
-plot inp u colx:($2/num1) w l lt 1 lw 6 lc rgb "gray" title "",\
-	 inp u colx:($2/num1) smooth bezier w l lt 1 lw 4 lc rgb "red" title "PP",\
-     inp u colx:($3/num2) w l lt 1 lw 6 lc rgb "gray" title "",\
-     inp u colx:($3/num2) smooth bezier w l lt 1 lw 4 lc rgb "blue" title "NP",\
-     inp u colx:(($2+$3)) w l lt 1 lw 6 lc rgb "gray" title "",\
-     inp u colx:(($2+$3)) smooth bezier w l lt 1 lw 4 lc rgb "black" title "Tot"
+plot inp u colx:($3/($2+$3)) w l lt 1 lw 6 lc rgb "gray" title "",\
+	 inp u colx:($3/($2+$3)) smooth bezier w l lt 1 lw 4 lc rgb "black" title out
 
 
      #,\

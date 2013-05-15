@@ -31,7 +31,7 @@ if [ $# -lt 3 ]; then # 2 para
 		echo "coly=${num}" >> tempdata.gpl
 		echo "xlabeltext='TimeStep'" >> tempdata.gpl
 		echo "ylabeltext='Contacts-$i'" >> tempdata.gpl
-		gnuplot draw_data.gpl
+		gnuplot draw_data_contact_$num.gpl
 		echo " check out your [ ${i}-contact.eps ] :)"
 	done
 	exit 0 
@@ -80,7 +80,7 @@ for i in `echo PP NP`; do
 	echo "coly=${num}" >> tempdata.gpl
 	echo "xlabeltext='TimeStep'" >> tempdata.gpl
 	echo "ylabeltext='Contacts-$i'" >> tempdata.gpl
-	gnuplot draw_data.gpl
+	gnuplot draw_data_contact_$num.gpl
 	echo " check out your [ ${i}-contact.eps ] :)"
 done
 #######################################

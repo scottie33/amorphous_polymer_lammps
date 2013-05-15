@@ -9,9 +9,10 @@ nc=16
 cl=64
 
 nn_sigma=4.7
-NP_num=0
+NP_num=1
 offset=0.0 # isotropically offsetting the com of NP-lattice (all nps).
 perNP=0.0  # if NP_num == 0 this will be used to generate the specified mass loading...
+perVol=0.05
 
 Radius=37.6/2.00
 pmass=56.0
@@ -21,7 +22,9 @@ start_mol=nc+1
 NP_type=nc+1
 
 MASS=pow(Radius/pradi,3.0)*pmass
-print " NP mass : %d" % (MASS)
+print " NP mass : %.2f" % (MASS)
+print " NP radius: %.2f" % (Radius)
+print " [ there should be %d monomers in the system if vol%% is: %.2f ]" % (int(MASS/pmass*(1/perVol-1)), perVol)
 if NP_num==0:
 	#if perNP-1e-12 <=0.0:
 	#	print " NP load : %f " % (perNP)

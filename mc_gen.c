@@ -504,7 +504,11 @@ static void write_file(void) {
   //fprintf(fq,"%10d     angles\n",natom-2*n_chains);
   //fprintf(fq,"%10d     dihedrals\n",natom-3*n_chains);
   fprintf(fq, "\n");
-  fprintf(fq,"%10d     atom types\n",n_chains+1);
+  if(num_NP!=0) {
+    fprintf(fq,"%10d     atom types\n",n_chains+1);
+  } else {
+    fprintf(fq,"%10d     atom types\n",n_chains);
+  }
   fprintf(fq,"%10d     bond types\n",1);
   //fprintf(fq,"%10d     angle types\n",1);
   //fprintf(fq,"%10d     dihedral types\n",1);

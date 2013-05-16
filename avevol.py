@@ -90,10 +90,58 @@ totlx=totlx/(size-halfsize)
 totly=totly/(size-halfsize)
 totlz=totlz/(size-halfsize)
 
+os.system("g++ restart2data.cpp -o restart2data.x")
+os.system("chmod +x restart2data.x")
+os.system("./restart2data.x restart.npt2zero.dat temp.data")
+inpfile2="temp.data"
+xlo=0.0
+xhi=0.0
+ylo=0.0
+yhi=0.0
+zlo=0.0
+zhi=0.0
+ctx=0.0
+cty=0.0
+ctz=0.0
+try:
+	inpfp2=open(inpfile2, 'r')
+	print " loading from [",inpfile2,"]."
+	#alllines=[]
+	line=inpfp2.readline()
+	while True:
+		line=inpfp2.readline()
+		if line:
+			elements=line.split()
+		else:
+			print " end of file, loading over. 1"
+			break
+		if len(elements)>2 and elements[2]=="xlo":
+			xlo=float(elements[0])
+			xhi=float(elements[1])
+		if len(elements)>2 and elements[2]=="ylo":
+			ylo=float(elements[0])
+			yhi=float(elements[1])
+		if len(elements)>2 and elements[2]=="zlo":
+			zlo=float(elements[0])
+			zhi=float(elements[1])
+	#print " there are %d NP in the system." % (totnum)
+except IOError:
+	print " ERROR: can not open file: [",inpfile2,"], regular calculation implemented: "
+	xhi=totlx
+	yhi=totly
+	zhi=totlz
+
+ctx=(xhi-xlo)/2.0+xlo
+cty=(yhi-ylo)/2.0+ylo
+ctz=(zhi-zlo)/2.0+zlo
+
 outfp2=open("volume.in", 'w')
-print >> outfp2, "variable tolx index %f" % totlx
-print >> outfp2, "variable toly index %f" % totly
-print >> outfp2, "variable tolz index %f" % totlz
+print >> outfp2, "variable fromlx index %f" % (ctx-totlx/2.0)
+print >> outfp2, "variable fromly index %f" % (cty-totly/2.0)
+print >> outfp2, "variable fromlz index %f" % (ctz-totlz/2.0)
+print >> outfp2, "variable tolx index %f" % (ctx+totlx/2.0)
+print >> outfp2, "variable toly index %f" % (cty+totly/2.0)
+print >> outfp2, "variable tolz index %f" % (ctz+totlz/2.0)
 print " [ volume.in ] created for be4nvtlow."
 outfp2.close()
 

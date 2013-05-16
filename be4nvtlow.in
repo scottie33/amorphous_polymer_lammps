@@ -39,8 +39,9 @@ include pairfile_no_soft
 
 #####################################################
 # Equilibration Stage 4 (NVT deform at 600 K to average volume) 
+fix     3rd np move linear 0 0 0 units box
 fix         1st all nvt temp ${temperature} ${temperature} ${damping}
-fix         3rd all deform 10 x final 0.0 ${tolx} y final 0.0 ${toly} z final 0.0 ${tolz} units box
+fix         2nd all deform 10 x final ${fromlx} ${tolx} y final ${fromly} ${toly} z final ${fromlz} ${tolz} units box
 fix   		4th all momentum 1 linear 1 1 1
 thermo_style	custom step temp press epair ebond vol pxx pyy pzz lx ly lz
 thermo          1000
@@ -49,6 +50,7 @@ dump		1 all dcd 1000 ${simname}.dcd
 reset_timestep  0
 run		${runtimes}
 unfix 1st
+unfix 2nd
 unfix 3rd
 unfix 4th
 write_restart 	restart.${simname}.dat

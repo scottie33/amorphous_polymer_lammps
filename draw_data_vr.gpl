@@ -12,7 +12,7 @@ coly=2
 xlabeltext='xlabel'
 ylabeltext='ylabel'
 xmin=0
-xmax=35
+xmax=25
 #ymin=0
 #ymax=100
 load "tempdata.gpl"

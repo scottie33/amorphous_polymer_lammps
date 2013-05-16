@@ -1,0 +1,23 @@
+---
+layout: post
+title: "NPC system step by step"
+description: ""
+category: Molecular Dynamics
+tags: [lammps, coarse grain, polymer, pnc]
+---
+{% include JB/setup %}
+
+![pnp.png](/images/2013/April/25/pnp.png)
+
+---
+
+![beg.png](/images/2013/April/25/beg.png)
+
+---
+
+![GlassTT.eps.png](/images/2013/April/25/GlassTT.eps.png)
+
+---
+
+![ff-rdf.eps.png](/images/2013/April/25/ff-rdf.eps.png)
+

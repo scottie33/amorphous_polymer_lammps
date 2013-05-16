@@ -1,30 +1,33 @@
 #!/usr/bin/python
 
 import math
+wellcoeff=math.pow(2.0,1.0/6.0)
 
 pairfile = file ('pairfile','w')
-Polymerall=16+1
-Delta_N=37.6
-Delta_P=0.0
+Polymerall=19+1
 sigma_pp=4.7
 sigma_nn=sigma_pp # 4.6 6.1 or 9.2
+sigma_np=(sigma_nn+sigma_pp)/2.0
+RadiusN=37.6/2.0
+Delta_N=RadiusN-sigma_np #*wellcoeff # the hard core radius
+Delta_P=0.0
 
 print " sigma_nn : %f" % (sigma_nn)
 print " sigma_pp : %f" % (sigma_pp)
-print " radiusN: %f+%f" % (Delta_N, sigma_nn)
-print " radiusP: %f+%f" % (Delta_P, sigma_pp)
+print " sigma_np : %f" % (sigma_np)
+print " hardcoreN: %f" % (Delta_N)
+print " hardcoreP: %f" % (Delta_P)
 print " polymer chain : %d " % (Polymerall-1)
 
 eV2KCal=23.061 # eV - > kcal/mol
 epsilon_pp=0.049*eV2KCal
 cutdis_pp=2.1*sigma_pp
-welldis_pp=pow(2,1/6.0)*sigma_pp
+welldis_pp=wellcoeff*sigma_pp
 
 epsilon_nn=0.25*epsilon_pp
-cutdis_nn=pow(2,1/6.0)*sigma_nn
+cutdis_nn=wellcoeff*sigma_nn
 
 epsilon_np=4.0*epsilon_pp
-sigma_np=(sigma_nn+sigma_pp)/2.0
 cutdis_np=2.1*sigma_np
 
 bond_length=4.7
@@ -54,6 +57,9 @@ print >> pairfile, "pair_coeff * %d %f %f %f %f" % (Polymerall, epsilon_np, sigm
 print >> pairfile, "pair_coeff %d %d %f %f %f %f" % (Polymerall, Polymerall, epsilon_nn, sigma_nn, Delta_N, cutdis_nn)
 #print >> pairfile, "pair_coeff * %d soft 0.5" % (Polymerall)
 #print >> pairfile, "fix SphSP all adapt 1 pair soft a * %d v_prefactor" % (Polymerall)
+
+print >> pairfile, "group pp type <= %d" % (Polymerall-1)
+print >> pairfile, "group np type %d" % (Polymerall)
 pairfile.close()
 
 

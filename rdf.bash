@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ $# -lt 6 ]; then
+if [ $# -lt 7 ]; then
 	echo " you should have VMD installed with path set well."
 	echo " "
-	echo " cmd psffile dcdfile fromid1 toid1 fromid2 toid2"
+	echo " cmd psffile dcdfile fromid1 toid1 fromid2 toid2 radiimax"
 	echo " "
 	echo " please try again."
 	exit -1
@@ -16,7 +16,7 @@ echo  "set sresids $3 " >> tempinput.tcl
 echo  "set sreside $4 " >> tempinput.tcl
 echo  "set eresids $5 " >> tempinput.tcl
 echo  "set ereside $6 " >> tempinput.tcl
-#echo  "set r1 $7 " >> tempinput.tcl
+echo  "set radiimax $7 " >> tempinput.tcl
 #echo  "set r2 $8 " >> tempinput.tcl
 #######################################
 

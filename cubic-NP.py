@@ -4,15 +4,18 @@ import random
 import math
 from array import array
 
+wellcoeff=math.pow(2.0,1.0/6.0)
+
 box_size=100
 nc=16
 cl=64
-
-nn_sigma=4.7
-NP_num=1
+pp_sigma=4.7
+nn_sigma=4.7 # nanoparticle-nanoparticle sigma
+np_sigma=(nn_sigma+pp_sigma)/2.0
+NP_num=2
 offset=0.0 # isotropically offsetting the com of NP-lattice (all nps).
 perNP=0.0  # if NP_num == 0 this will be used to generate the specified mass loading...
-perVol=0.05
+perVol=0.05 # show message, no use at all.
 
 Radius=37.6/2.00
 pmass=56.0
@@ -23,8 +26,9 @@ NP_type=nc+1
 
 MASS=pow(Radius/pradi,3.0)*pmass
 print " NP mass : %.2f" % (MASS)
-print " NP radius: %.2f" % (Radius)
-print " [ there should be %d monomers in the system if vol%% is: %.2f ]" % (int(MASS/pmass*(1/perVol-1)), perVol)
+print " NP hard-core-radius: %.2f (%.2f-%.2f)" % (Radius-np_sigma*wellcoeff , Radius, wellcoeff*np_sigma)	
+
+print " [ there should be %d monomers in the system if you want vol%% 2be: %.2f ]" % (int(NP_num*MASS/pmass*(1/perVol-1)), perVol)
 if NP_num==0:
 	#if perNP-1e-12 <=0.0:
 	#	print " NP load : %f " % (perNP)
@@ -39,26 +43,33 @@ else:
 	perNP=NP_num*MASS/(NP_num*MASS+pmass*nc*cl)
 	print " NP numb : %f, the mass load %% is %f : " % (NP_num, perNP) 
 
-NP_single=int(pow(NP_num, 1/3.0))
+NP_single=pow(NP_num, 1.0/3.0)
+if (NP_single-int(NP_single))>1e-12:
+	NP_single=int(NP_single)+1
+else:
+	NP_single=int(NP_single)
+print " there are %d monomers each dimension " % (NP_single)
+
 if NP_single == 0:
 	dimension = 0.0
 else:
-	dimension=box_size/NP_single
+	dimension=box_size/float(NP_single)
 
-nn_dis=4.7*math.pow(2, 1/6.0)
-nn_dis=nn_dis+2*Radius #?diameter?
-print " the distance between n-n is %f" % (nn_dis)
+
+nn_dis=nn_sigma*wellcoeff
+nn_dis=nn_dis+2*(Radius-np_sigma) #?diameter?
 if dimension < nn_dis :
 	dimension = nn_dis
 	box_size=NP_single*nn_dis
-	print " and the box_size is : %f" % (box_size)
+print " the distance of n-n is %f (>= %f x 2+%f)" % (dimension, Radius-np_sigma, nn_sigma*wellcoeff)
+print " the box_size is : %f (better bigger than %f x %d)" % (box_size, 2.0*(Radius-np_sigma)+nn_sigma*wellcoeff, NP_single)
 
 
 NP_coord=[]
 
-for i in range(0, NP_single):
+for k in range(0, NP_single): # k j i for along x y z the order.
 	for j in range(0, NP_single):
-		for k in range(0, NP_single):
+		for i in range(0, NP_single):
 			randoma=(0.5+i)*dimension
 			randomb=(0.5+j)*dimension
 			randomc=(0.5+k)*dimension

@@ -43,7 +43,8 @@ proc my_analysis { frame } {
     #puts " $i $sreside"
     set sel [atomselect top "resid $i"]
     set tempgry [measure rgyr $sel]
-    set gyrtot [expr $gyrtot+$tempgry]
+    #puts $tempgry
+    set gyrtot [expr $gyrtot+$tempgry*$tempgry]
     #puts " $gyrtot"
     if { $i == $sresids } {
       set gyrmin $tempgry
@@ -58,10 +59,10 @@ proc my_analysis { frame } {
     }
     #puts " $gyrmin"
     #puts " $gyrmax"
-    $sel delete
+    #$sel delete
     #puts " next"
   }
-
+  #puts [expr $gyrtot/$totres] ;#testing
   lappend rofgyr [expr $gyrtot/$totres]
   lappend mingyr $gyrmin
   lappend maxgyr $gyrmax

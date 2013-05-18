@@ -3,14 +3,15 @@
 import math
 
 pairfile = file ('pairfile','w')
-Polymerall=19+1
-sigma_nn=37.6/2.0+0.2 # 4.6 6.1 or 9.2
+Polymerall=38+1
+sigma_nn=37.6 # 4.6 6.1 or 9.2
 sigma_pp=4.7
 #sigma_np=(sigma_nn+sigma_pp)/2.0
-sigma_np=sigma_nn
+sigma_np=(sigma_nn+sigma_pp)/2.0
 
 print " sigma_nn : %f" % (sigma_nn)
 print " sigma_pp : %f" % (sigma_pp)
+print " sigma_np : %f" % (sigma_np)
 print " polymer chain : %d " % (Polymerall-1)
 
 eV2KCal=23.061 # eV - > kcal/mol

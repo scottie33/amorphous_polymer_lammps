@@ -5,8 +5,8 @@ unset mxtics
 unset mytics
 reset
 
-out='rogyr'
-inp='rogyr.dat'
+out='rogyrxyz'
+inp='rogyrxyz.dat'
 xlabeltext='Strain (%)'
 ylabeltext='Average Radius of Gyration'
 #xmin=0
@@ -46,7 +46,13 @@ set xtics nomirror #font "UTF-8,12" #tc rgb "#0000ff"
 set key box
 #plot for [i=2:nrep:1] "probability_each.dat" u 1:i w filledcurves title "T".i
 plot inp u 1:(sqrt($2)) w l lt 1 lw 6 lc rgb "gray" title "",\
-	inp u 1:(sqrt($2)) smooth bezier w l lt 1 lw 3 lc rgb "#003D79" title "Average Gyration"
+	 inp u 1:(sqrt($2)) smooth bezier w l lt 1 lw 4 lc rgb "#003D79" title "Gyration X",\
+	 inp u 1:(sqrt($3)) w l lt 1 lw 6 lc rgb "gray" title "",\
+	 inp u 1:(sqrt($3)) smooth bezier w l lt 1 lw 4 lc rgb "blue" title "Gyration Y",\
+	 inp u 1:(sqrt($4)) w l lt 1 lw 6 lc rgb "gray" title "",\
+	 inp u 1:(sqrt($4)) smooth bezier w l lt 1 lw 4 lc rgb "red" title "Gyration Z",\
+	 inp u 1:(sqrt($2+$3+$4)) w l lt 1 lw 6 lc rgb "gray" title "",\
+	 inp u 1:(sqrt($2+$3+$4)) smooth bezier w l lt 1 lw 3 lc rgb "black" title "Gyration"
 
 
      #inp u 1:2:3:4 with errorbars lc rgb "#003D79" title ""

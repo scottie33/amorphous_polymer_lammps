@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cat template_readme.dat > _posts/2013-04-23-npc-system-step-by-step.md
-cat /Users/scottie33/working/amorphous_polymer/tools/run.all/perfect/README.md >> _posts/2013-04-23-npc-system-step-by-step.md
-git add .
-git commit -m "readme renewed"
-git push origin master
+cat template_readme.dat > 2013-05-17-readme.md
+cat README.md >> 2013-05-17-readme.md
+cp 2013-05-17-readme.md /Users/scottie33/scottie33.github.io/_posts/

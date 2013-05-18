@@ -10,7 +10,7 @@ box_size=100
 nc=16
 cl=64
 pp_sigma=4.7
-nn_sigma=4.7 # nanoparticle-nanoparticle sigma
+nn_sigma=pp_sigma # nanoparticle-nanoparticle sigma
 np_sigma=(nn_sigma+pp_sigma)/2.0
 NP_num=2
 offset=0.0 # isotropically offsetting the com of NP-lattice (all nps).
@@ -24,9 +24,11 @@ start_index=nc*cl+1
 start_mol=nc+1
 NP_type=nc+1
 
-MASS=pow(Radius/pradi,3.0)*pmass
-print " NP mass : %.2f" % (MASS)
-print " NP hard-core-radius: %.2f (%.2f-%.2f)" % (Radius-np_sigma*wellcoeff , Radius, wellcoeff*np_sigma)	
+MASS=pow(2.0*Radius/pradi,3.0)*pmass
+print " N for Nano-Particle " 
+print " N mass : %.2f" % (MASS)
+print " N hard-core-radius: Rnn=%.2f (%.2f-%.2f)" % (Radius-nn_sigma*0.5 , Radius, nn_sigma*0.5)
+print " N balance distance: %.2f (2.0*Rnn+%.2f)" % (2*(Radius-nn_sigma*0.5)+nn_sigma*wellcoeff, nn_sigma*wellcoeff)	
 
 print " [ there should be %d monomers in the system if you want vol%% 2be: %.2f ]" % (int(NP_num*MASS/pmass*(1/perVol-1)), perVol)
 if NP_num==0:
@@ -36,12 +38,14 @@ if NP_num==0:
 	#	print " No NP at all, exit. "
 	#	exit(-1)
 	NP_num=nc*cl*pmass*perNP/(1.0-perNP)/MASS
-	print " NP load : %f " % (perNP)
-	print " NP numb : %f, truncated to %d " % (NP_num, int(NP_num)) 
+	#print " N load : %f " % (perNP)
+	print " N numb : %f, truncated to %d " % (NP_num, int(NP_num)) 
 	NP_num=int(NP_num)
 else:
 	perNP=NP_num*MASS/(NP_num*MASS+pmass*nc*cl)
-	print " NP numb : %f, the mass load %% is %f : " % (NP_num, perNP) 
+	print " N numb : %f" % (NP_num)
+
+print " N load %% is %f : " % (perNP) 
 
 NP_single=pow(NP_num, 1.0/3.0)
 if (NP_single-int(NP_single))>1e-12:
@@ -57,12 +61,12 @@ else:
 
 
 nn_dis=nn_sigma*wellcoeff
-nn_dis=nn_dis+2*(Radius-np_sigma) #?diameter?
+nn_dis=nn_dis+2*(Radius-nn_sigma*0.5) #?diameter?
 if dimension < nn_dis :
 	dimension = nn_dis
 	box_size=NP_single*nn_dis
-print " the distance of n-n is %f (>= %f x 2+%f)" % (dimension, Radius-np_sigma, nn_sigma*wellcoeff)
-print " the box_size is : %f (better bigger than %f x %d)" % (box_size, 2.0*(Radius-np_sigma)+nn_sigma*wellcoeff, NP_single)
+print " the distance of n-n is %f (>=%fx2+%f)" % (dimension, Radius-nn_sigma*0.5, nn_sigma*wellcoeff)
+print " the box_size is : %f (better bigger than %fx%d)" % (box_size, 2.0*(Radius-0.5*nn_sigma)+nn_sigma*wellcoeff, NP_single)
 
 
 NP_coord=[]

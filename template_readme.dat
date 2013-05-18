@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "NPC system step by step"
+title: "PNC system step by step"
 description: ""
 category: Molecular Dynamics
 tags: [lammps, coarse grain, polymer, pnc]

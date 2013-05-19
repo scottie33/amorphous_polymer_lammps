@@ -29,10 +29,11 @@ echo "colx=1" >> tempdata.gpl
 echo "coly=2" >> tempdata.gpl
 echo "xlabeltext='Distance'" >> tempdata.gpl
 echo "ylabeltext='Distribution'" >> tempdata.gpl
+echo "xmax=$7" >> tempdata.gpl
 gnuplot draw_data_rdf.gpl
 echo " check out your [ Grdf.eps ] :)"
 #######################################
 
-./calcrho.py grdf.dat
+./calcrho.py grdf.dat $7
 
 exit 0 

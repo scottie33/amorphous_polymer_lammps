@@ -76,6 +76,8 @@ print >> tempgplfp, "colx=1"
 print >> tempgplfp, "coly=2"
 print >> tempgplfp, "xlabeltext='Distance (Angstrom)'"
 print >> tempgplfp, "ylabeltext='Rho'"
+if len(sys.argv)>1:
+	print >> tempgplfp, "xmax=%f" % (float(sys.argv[2]))
 tempgplfp.close()
 
 os.system("gnuplot draw_data_rdf.gpl")
@@ -90,6 +92,8 @@ print >> tempgplfp, "colx=1"
 print >> tempgplfp, "coly=3"
 print >> tempgplfp, "xlabeltext='Distance (Angstrom)'"
 print >> tempgplfp, "ylabeltext='V(r)'"
+if len(sys.argv)>1:
+	print >> tempgplfp, "xmax=%f" % (float(sys.argv[2]))
 tempgplfp.close()
 
 os.system("gnuplot draw_data_vr.gpl")

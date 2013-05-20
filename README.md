@@ -72,7 +72,7 @@ Topology of the usage:
     allpeak.py [ need explanation ]
     getpdb.bash (.psf ... )
     getrogyr.bash
-    getrogyrxyz.bash
+    getrogyrxyz.bash (better version for RG, though slower...)
     amongpdb.bash
 
 clean.bash will do purge for this command, use it carefully.

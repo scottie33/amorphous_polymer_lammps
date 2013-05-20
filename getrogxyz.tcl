@@ -41,9 +41,45 @@ proc my_analysis { frame } {
   set gyrz 0.0
   set listlen 0
   #set temprgyr 0.0 ;#testing
+  set boxhalf [vecscale 0.5 [molinfo top get {a b c}]] ;#box dimension half;
   for { set i $sresids } { $i <= $sreside } { incr i } {
     #puts " $i $sreside"
     set sel [atomselect top "resid $i"]
+    ######## realign #########
+    set coord [$sel get {x y z}]
+    set newcoord {}
+    set ref [lindex $coord 0]
+    lappend newcoord $ref 
+    foreach atom [lrange $coord 1 end] {
+      set newatom {} 
+      set dist [vecsub $atom $ref]
+      foreach d $dist b $boxhalf r $atom {
+        if { $d < -$b } { 
+          set r [expr $r+2.0*$b]
+          set d [expr $d+2.0*$b]
+          if { $d < -$b } {
+            while { $d < -$b } {
+              set r [expr $r+2.0*$b]
+              set d [expr $d+2.0*$b]
+            }
+          }
+        } elseif { $d > $b } { 
+          set r [expr $r-2.0*$b]
+          set d [expr $d-2.0*$b]
+          if { $d > $b } {
+            while { $d > $b } {
+              set r [expr $r-2.0*$b]
+              set d [expr $d-2.0*$b]
+            }
+          }
+        } 
+        lappend newatom $r 
+      }
+      lappend newcoord $newatom 
+      set ref $newatom  ;#current ref. virtually 1st atom coor.
+    }
+    $sel set {x y z} $newcoord
+    ######## realign #########
     #set t [measure rgyr $sel] ;#testing
     #set temprgyr [expr $temprgyr+$t*$t] ;#testing
     

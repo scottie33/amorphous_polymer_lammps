@@ -7,8 +7,8 @@ from array import array
 wellcoeff=math.pow(2.0,1.0/6.0)
 
 box_size=100
-nc=16
-cl=64
+nc=2048
+cl=2
 pp_sigma=4.7
 nn_sigma=pp_sigma # nanoparticle-nanoparticle sigma
 np_sigma=(nn_sigma+pp_sigma)/2.0
@@ -21,7 +21,8 @@ Radius=37.6/2.00
 pmass=56.0
 pradi=4.7 #polymer radii
 start_index=nc*cl+1
-start_mol=nc+1
+#start_mol=nc+1
+start_mol=1+1
 NP_type=nc+1
 
 MASS=pow(2.0*Radius/pradi,3.0)*pmass

@@ -505,9 +505,9 @@ static void write_file(void) {
   //fprintf(fq,"%10d     dihedrals\n",natom-3*n_chains);
   fprintf(fq, "\n");
   if(num_NP!=0) {
-    fprintf(fq,"%10d     atom types\n",n_chains+1);
+    fprintf(fq,"%10d     atom types\n",atom_list[natom-1].chain+1);
   } else {
-    fprintf(fq,"%10d     atom types\n",n_chains);
+    fprintf(fq,"%10d     atom types\n",atom_list[natom-1].chain);
   }
   fprintf(fq,"%10d     bond types\n",1);
   //fprintf(fq,"%10d     angle types\n",1);
@@ -558,7 +558,7 @@ static void write_file(void) {
     }
     for(j=0;j<3;j++) { xx[j]=lat*(xx[j]+a[j]); }
     //fprintf(fq,"%10d%10d%10d%10.4f%10.4f%10.4f\n",i+1,atom_list[i].chain,atom_list[i].type,xx[0],xx[1],xx[2]);
-    fprintf(fq,"%10d%10d%10d%10.4f%10.4f%10.4f\n",i+1,atom_list[i].chain,atom_list[i].chain,xx[0],xx[1],xx[2]);
+    fprintf(fq,"%10d%10d%10d%10.4f%10.4f%10.4f\n",i+1,atom_list[i].type,atom_list[i].chain,xx[0],xx[1],xx[2]);
   }
   for(i=0;i<num_NP;i++) {
     fprintf(fq,"%10d%10d%10d%10.4f%10.4f%10.4f\n",npindex[i],molechn[i],npchain[i],xcoo[i],ycoo[i],zcoo[i]);

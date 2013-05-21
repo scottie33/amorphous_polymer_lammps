@@ -83,18 +83,21 @@ for i in range(0, natom):
 	line = fp.readline()
 	elements = line.split()
 	if ndx != int(elements[0]): raise StandardError, "wrong atom index in line: " + line.rstrip()
-	nres = int(elements[1])
-	typn = int(elements[2])
+	typn = int(elements[1]) #mol
+	nres = int(elements[2]) #atom type
 	x = float(elements[3+shift])
 	y = float(elements[4+shift])
 	z = float(elements[5+shift])
 	#nres = nres-int(nres/10000)*10000
-	nres = int(nres)%10000
-	ndx = int(ndx)%100000
+	nres = int(nres)%10000 #may introduce some error.
+	ndx = int(ndx)%100000  #may introduce some error...
 	#print >> pdbfp, "ATOM  %5d  %s   %3s A%04d    %8.3f%8.3f%8.3f  1.00  0.00" % (ndx, atlst[typn], "LMP", nres, x, y, z)
+	#                rec   ndx name resn chn resid
 	print >> pdbfp, "ATOM  %5d%3s   %3s A%04d    %8.3f%8.3f%8.3f  1.00  0.00" % (ndx, typn, "LMP", nres, x, y, z)
 	#print >> psffp, "%8d A%03d%6d LMP%4s %4s                   " % (ndx, typn, nres, atlst[typn], atlst[typn])
-	print >> psffp, "%8d A%03d%6d LMP%4s %4s                   " % (ndx, typn, typn, typn, typn)
+	#      ID seg resi  resn  an   at
+	#       1 U    1    MET  N    NH3   -0.300000       14.0070           0
+	print >> psffp, "%8d%2d%03d%6d LMP%5s%5s                   " % (ndx, typn, typn, nres, typn, nres)
 
 while True:
         line = fp.readline()

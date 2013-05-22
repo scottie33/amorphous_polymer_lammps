@@ -1,0 +1,61 @@
+########################################
+#                                      #
+# PNC deforming LAMMPS input script    #
+#                                      #
+########################################
+
+# 2 nvt - deform compressiong the box @1000k.
+
+# VARIABLES
+variable fname index nvthightemp
+variable simname index deformation
+variable temperature index 1000
+variable damping index 20
+variable runtimes index 1000000
+variable deformtox index 150
+variable deformtoy index 75
+variable deformtoz index 75
+#variable prefactor equal ramp(0,30)
+
+# Initialization
+units		real
+boundary	p p p 
+atom_style	molecular
+log 		${simname}.log
+#read_data	${fname}.dat
+read_restart	restart.${fname}.dat
+
+# Dreiding potential information
+neighbor	0.4 bin
+neigh_modify	every 10 one 10000
+#bond_style      class2
+#bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
+#bond_coeff	1 4.7 0.25ev 0.0 0.125ev
+
+#special_bonds fene angle no dihedral no
+special_bonds lj 0.0 1.0 1.0
+
+#####equi1_pair.py data
+include pairfile_no_soft
+####equi1_pair.py complete
+
+#####################################################
+# Equilibration Stage 2 (NVT deform at 1000 K)
+fix         1st all nvt temp ${temperature} ${temperature} ${damping}
+fix         2nd np move linear 0 0 0 units box
+fix         3rd all deform 10 x final 0.0 ${deformtox} y final 0.0 ${deformtoy} z final 0.0 ${deformtoz} units box
+fix   		4th all momentum 1 linear 1 1 1
+thermo_style	custom step temp press epair ebond vol pxx pyy pzz lx ly lz
+thermo          1000
+timestep	2	
+dump		1 all dcd 1000 ${simname}.dcd
+reset_timestep  0
+run		${runtimes}
+unfix 1st
+unfix 2nd
+unfix 3rd
+unfix 4th
+write_restart 	restart.${simname}.dat
+
+print "[>> All done! <<]"
+

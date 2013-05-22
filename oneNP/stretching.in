@@ -1,0 +1,66 @@
+########################################
+#                                      #
+# PNC deforming LAMMPS input script    #
+#                                      #
+########################################
+
+# 7 stretching.
+
+# VARIABLES
+variable fname index nvtlowtemp
+variable simname index stretching
+variable Tdamping index 20
+variable Pdamping index 100
+variable runtimes index 3000000
+variable temperature index 200
+#variable 
+
+# Initialization
+units		real
+boundary	p p p 
+atom_style	molecular
+log 		${simname}.log
+#read_data	${fname}.dat
+read_restart	restart.${fname}.dat
+
+# Dreiding potential information
+neighbor	0.4 bin
+neigh_modify	every 10 one 10000
+#bond_style      class2
+#bond_coeff	1 4.7 5.76525  0.0 2.882625 #kcal/mol
+#bond_coeff	1 4.7 0.25ev 0.0 0.125ev
+
+#special_bonds fene angle no dihedral no
+special_bonds lj 0.0 1.0 1.0
+
+#####equi1_pair.py data
+include pairfile_no_soft
+####equi1_pair.py complete
+
+#####################################################
+# Equilibration Stage 7 (NVE stretching)
+fix     3rd np move linear NULL 0 0 units box
+variable tmp equal "lx"
+variable L0 equal ${tmp}
+variable strain equal "(lx - v_L0)/v_L0"
+variable p1 equal "v_strain"
+variable p2 equal "-pxx*0.101325"
+fix             1 all nve     #when stretching nve
+#fix	            1 all npt temp ${temperature} ${temperature} ${Tdamping} y 0.0 0.0 ${Pdamping} z 0.0 0.0 ${Pdamping} drag 2
+fix             2 all deform 1 x vel 0.000011 units box remap x
+fix def1 all print 100 "${p1} ${p2}" file ${simname}.dat screen no
+thermo_style    custom step temp epair ebond ke press vol lx ly lz pxx pyy pzz pxy pxz pyz
+thermo          100
+dump            1 all dcd 5000 ${simname}.dcd
+timestep        1
+reset_timestep  0
+run		${runtimes}
+
+unfix 1
+unfix 2
+unfix def1
+unfix 3rd
+
+write_restart   restart.${simname}.deform
+
+print "[>> All done <<]"

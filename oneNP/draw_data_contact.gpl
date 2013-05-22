@@ -1,0 +1,75 @@
+
+unset xtics
+unset ytics
+unset mxtics
+unset mytics
+reset
+
+num1=1
+num2=1
+out='outdata'
+inp='inpdata'
+colx=1
+coly=2
+xlabeltext='xlabel'
+ylabeltext='ylabel'
+#xmin=0
+#xmax=100
+#ymin=0
+#ymax=100
+load "tempdata.gpl"
+
+set term post enh size 8,4.5 color
+set out out.'.eps'
+
+#set term X11 size 640,360 #16:9 nice look
+set multiplot
+#unset key
+#set title 
+set xlabel xlabeltext #font "Arial,16"# tc rgb "#0000ff"
+#set encoding default
+set ylabel ylabeltext #font "UTF-8,16"# tc rgb "#880000"
+
+#set xrange [xmin:xmax]
+#set yrange [ymin:ymax]
+
+set ytics nomirror #font "UTF-8,12" #tc rgb "#880000"
+#set y2tics tc rgb "#008800"
+set xtics nomirror #font "UTF-8,12" #tc rgb "#0000ff"
+#xinterval=(xmax-xmin)/10
+#set ytics 5
+
+#set mxtics 5
+#set mytics 5
+
+#set offsets graph <left>, <right>, <top>, <bottom>
+#set offsets graph 0, 0, 5, 0
+
+#set grid xtics lt 0 lw 1 lc rgb "#0000ff"
+#set style fill transparent solid 0.1 noborder
+#set key left
+#set key box
+#set arrow 1 from 0,1 to 10,1 nohead lt 4 lw 4 lc rgb "gray"
+#plot for [i=2:nrep:1] "probability_each.dat" u 1:i w filledcurves title "T".i
+#plot inp u colx:($2*num1/totnum) w l lt 1 lw 6 lc rgb "gray" title "",\
+#	 inp u colx:($2*num1/totnum) smooth bezier w l lt 1 lw 4 lc rgb "orange" title "PP",\
+
+
+plot inp u colx:($2/num1) w l lt 1 lw 6 lc rgb "gray" title "",\
+	 inp u colx:($2/num1) smooth bezier w l lt 1 lw 4 lc rgb "red" title "PP",\
+     inp u colx:($3/num2) w l lt 1 lw 6 lc rgb "gray" title "",\
+     inp u colx:($3/num2) smooth bezier w l lt 1 lw 4 lc rgb "blue" title "NP",\
+     inp u colx:(($2+$3)) w l lt 1 lw 6 lc rgb "gray" title "",\
+     inp u colx:(($2+$3)) smooth bezier w l lt 1 lw 4 lc rgb "black" title "Tot"
+
+
+     #,\
+    # inp u colx:($5*num2/totnum) w l lt 1 lw 6 lc rgb "gray" title "",\
+    # inp u colx:($5*num2/totnum) smooth bezier w l lt 1 lw 4 lc rgb "royalblue" title "NN"
+     #"beta.dat" u 1:2 smooth bezier w l lt 2 lw 1 lc rgb "brown" title ""
+
+#plot "beta.dat" u 1:2 title "" smooth bezier w l lt 1 lw 6 lc rgb "gray"
+
+unset multiplot
+
+

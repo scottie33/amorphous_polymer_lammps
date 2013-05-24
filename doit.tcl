@@ -14,14 +14,18 @@ proc make_whole {mol sel frame num chn rad} {
 	set newcoord {}
 	set firstlen [expr $num*$chn]
 	set lastcoord [lrange $allcoord $firstlen end]
-	puts " [format "%8d" $frame]: length of lastcoord: [llength $lastcoord]"
+	set lenlastcoord [llength $lastcoord]
+	puts " [format "%8d" $frame]: length of lastcoord: $lenlastcoord"
 	set allcoord [lrange $allcoord 0 [expr $firstlen-1]]
 	while {[llength $allcoord] > 0} { ;# every num coor;
 		set coord [lrange $allcoord 0 $num1] ;# [0,num-1] coors;
 		set allcoord [lrange $allcoord $num end] ;# [num, end] coors for the next round;
 		set ref [lindex $coord 0] ;
 		lappend newcoord $ref 
+		#set num 1
 		foreach atom [lrange $coord 1 end] {
+			set num [expr $num+1]
+			#puts $num
 			set newatom {} 
 			set dist [vecsub $atom $ref]
 			foreach d $dist b $boxhalf r $atom {
@@ -51,10 +55,11 @@ proc make_whole {mol sel frame num chn rad} {
 			set ref $newatom  ;#current ref. virtually 1st atom coor.
 		}
 	}
-	foreach atom [lrange $lastcoord 1 end] {
-		lappend newcoord $atom 
+	if { $lenlastcoord > 0 } {
+		foreach atom [lrange $lastcoord 1 end] {
+			lappend newcoord $atom 
+		}
 	}
-	lappend newcoord $newatom 
 	$sel set {x y z} $newcoord
 }
 set mol [molinfo top] 
@@ -63,5 +68,5 @@ set ring [atomselect $mol {all}]
 
 set nf [molinfo $mol get numframes] 
 for {set i 0} {$i < $nf} {incr i} {
-	make_whole $mol $ring $i 64 64 4.7;#if 100, the total number has to be 100N;
+	make_whole $mol $ring $i 64 1 4.7;#if 100, the total number has to be 100N;
 }

@@ -22,6 +22,9 @@ To get the newest version:
     c: makepair001.py | makepair_expand.py
        mv pairfile **pairfile_rep** (do all the repel for minimization)
        mv pairfile **pairfile_no_soft** (for the rest of the protocol, please do not ask why...)
+    d: mcmc 
+       this command will generate a compact polymer matrix with .pdb .psf .dat (lammps datafile format)
+       need to be used carefully.
 
 ----
 

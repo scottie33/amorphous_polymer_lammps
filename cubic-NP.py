@@ -6,18 +6,18 @@ from array import array
 
 wellcoeff=math.pow(2.0,1.0/6.0)
 
-box_size=100
-nc=2048
-cl=2
+box_size=1
+nc=1
+cl=64
 pp_sigma=4.7
-nn_sigma=pp_sigma # nanoparticle-nanoparticle sigma
+nn_sigma=37.6 # nanoparticle-nanoparticle sigma
+Radius=37.6/2.0
 np_sigma=(nn_sigma+pp_sigma)/2.0
-NP_num=2
+NP_num=1
 offset=0.0 # isotropically offsetting the com of NP-lattice (all nps).
 perNP=0.0  # if NP_num == 0 this will be used to generate the specified mass loading...
 perVol=0.05 # show message, no use at all.
 
-Radius=37.6/2.00
 pmass=56.0
 pradi=4.7 #polymer radii
 start_index=nc*cl+1

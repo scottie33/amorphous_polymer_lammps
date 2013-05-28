@@ -44,7 +44,7 @@ while True:
 	#print " ",elements," ... "
 	if len(elements)!=0 and elements[0] == "run" and elements[1][0:1] != '$' :
 		runsteps=int(elements[1])
-	if len(elements)!=0 and elements[0] == "thermo" :
+	if len(elements)!=0 and elements[0] == "thermo" and elements[1][0]!='$' :
 		logsteps=int(elements[1])
 	if len(elements)!=0 and elements[0] == keyword :
 		flagkeyword=1;

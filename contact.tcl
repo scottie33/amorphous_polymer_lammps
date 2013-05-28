@@ -92,7 +92,7 @@ for { set i 0 } { $i < $nf } { incr i } {
 	set numPP 0
 	#set numPN 0
 	set numNP 0
-	#set numNN 0
+	set numNN 0
 	foreach j $indices1 tempcl $chainlen tresid $resilist { ;# P
 		#puts " $j $tempcl "
 		set tempPP [atomselect $mol "(resid $sresids to $sreside) and (not resid $tresid) and (within $r11ranged of index $j)"]
@@ -107,12 +107,17 @@ for { set i 0 } { $i < $nf } { incr i } {
 		$tempNP delete
 	#	$tempNN delete
 	}
+	foreach j $indices2 { ;# N
+		set tempNN [atomselect $mol "(within $r22ranged of index $j) and (resid $eresids to $ereside)"]
+		set numNN [expr $numNN+[$tempNN num]]
+		$tempNN delete
+	}
 	#puts $numNP
 	#lappend CPP [expr $numPP/$numP]
 	#lappend CPN [expr $numPN/$numP]
 	#lappend CNP [expr $numNP/$numN]
 	#lappend CNN [expr $numNN/$numN]
-	puts $outfile2 [format "%d %.4f %.4f" [expr $i+1] [expr $numPP] [expr $numNP]];# [expr $numNP/$numN] [expr $numNN/$numN]]
+	puts $outfile2 [format "%d %.4f %.4f %.4f" [expr $i+1] [expr $numPP] [expr $numNP] [expr $numNN]];# [expr $numNP/$numN] [expr $numNN/$numN]]
 }
 
 #for { set i 0 } { $i < $nf } { incr i } {

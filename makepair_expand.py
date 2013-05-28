@@ -63,7 +63,7 @@ print >> pairfile, "pair_coeff %d %d %f %f %f %f" % (Polymerall, Polymerall, eps
 #print >> pairfile, "fix SphSP all adapt 1 pair soft a * %d v_prefactor" % (Polymerall)
 
 print >> pairfile, "group pp type <= %d" % (Polymerall-1)
-print >> pairfile, "group np type %d" % (Polymerall)
+print >> pairfile, "group nn type %d" % (Polymerall)
 pairfile.close()
 
 

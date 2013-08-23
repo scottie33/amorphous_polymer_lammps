@@ -4,9 +4,9 @@ proc make_whole {mol sel frame num chn rad boxlen} {
 	set allcoord [$sel get {x y z}]
 	set num1 [expr {$num - 1}]
 	set boxhalf [] ;#box dimension half;
-	lappend boxhalf $boxlen
-	lappend boxhalf $boxlen
-	lappend boxhalf $boxlen
+	lappend boxhalf [expr $boxlen/2.0]
+	lappend boxhalf [expr $boxlen/2.0]
+	lappend boxhalf [expr $boxlen/2.0]
 	#puts "$boxhalf"
 	#set la [lindex boxhalf 0]
 	#set lb [lindex boxhalf 1]
@@ -62,7 +62,7 @@ proc make_whole {mol sel frame num chn rad boxlen} {
 		foreach atom [lrange $lastcoord 0 $lenlastcoord] {
 			lappend newcoord $atom 
 		}
-		puts "happend, and the size is: [llength $newcoord]"
+		#puts "happend, and the size is: [llength $newcoord]"
 		#lappend newcoord $atom 
 	}
 	$sel set {x y z} $newcoord
@@ -74,6 +74,6 @@ set ring [atomselect $mol {all}]
 
 set nf [molinfo $mol get numframes] 
 for {set i 0} {$i < $nf} {incr i} {
-	make_whole $mol $ring $i 64 1 4.7 38.0;#if 100, the total number has to be 100N;
+	make_whole $mol $ring $i 64 1 4.7 100.0;#if 100, the total number has to be 100N;
 	puts "$i"
 }

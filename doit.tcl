@@ -22,10 +22,7 @@ proc make_whole {mol sel frame num chn rad} {
 		set allcoord [lrange $allcoord $num end] ;# [num, end] coors for the next round;
 		set ref [lindex $coord 0] ;
 		lappend newcoord $ref 
-		#set num 1
 		foreach atom [lrange $coord 1 end] {
-			set num [expr $num+1]
-			#puts $num
 			set newatom {} 
 			set dist [vecsub $atom $ref]
 			foreach d $dist b $boxhalf r $atom {

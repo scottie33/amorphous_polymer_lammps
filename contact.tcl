@@ -109,7 +109,7 @@ for { set i 0 } { $i < $nf } { incr i } {
 	}
 	foreach j $indices2 { ;# N
 		set tempNN [atomselect $mol "(within $r22ranged of index $j) and (resid $eresids to $ereside)"]
-		set numNN [expr $numNN+[$tempNN num]]
+		set numNN [expr $numNN+[$tempNN num]-1]
 		$tempNN delete
 	}
 	#puts $numNP
